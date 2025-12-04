@@ -1,0 +1,23 @@
+@use "_mixins/rem" as *;
+
+.base-layout {
+  min-height: 100dvh;
+  display: flex;
+
+  & > * {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 0;
+
+    max-width: 340px;
+    max-height: 100dvh;
+  }
+
+  &__content {
+    padding: rem(24px);
+  }
+}

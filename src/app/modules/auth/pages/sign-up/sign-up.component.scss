@@ -1,0 +1,42 @@
+@use "_mixins/rem" as *;
+
+.sign-up {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16px);
+
+    padding: rem(32px);
+  }
+
+  &__have-account {
+    display: flex;
+    align-items: center;
+    gap: rem(16px);
+
+    padding: 14px rem(32px);
+
+    background-color: var(--border-color);
+    font-size: 13px;
+
+    &:before,
+    &:after {
+      display: block;
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+
+    a {
+      color: var(--primary-color);
+
+      &:hover {
+        color: color-mix(in srgb, var(--primary-color) 85%, transparent);
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@use "_mixins/rem" as *;
+
+.rs-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  &:hover {
+    .rs-checkbox {
+      &__custom {
+        background-color: color-mix(in srgb, var(--neutral-100-color) 10%, transparent);
+      }
+
+      &__content {
+        color: color-mix(in srgb, var(--neutral-50-color) 40%, var(--neutral-100-color));
+      }
+    }
+  }
+
+  &__custom {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--neutral-50-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+
+    transition: border-color .15s ease-in-out, background-color .15s ease-in-out;
+
+    &.checked {
+      border-color: var(--primary-color);
+
+      mat-icon {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    mat-icon {
+      color: var(--primary-color);
+      opacity: 0;
+      transform: scale(0);
+      transition: transform .15s ease-in-out, opacity .15s ease-in-out;
+    }
+  }
+
+  &__content {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="rs-switch">
+  <div class="rs-switch__label">
+    <ng-content></ng-content>
+  </div>
+  <div class="rs-switch__items" [attr.style]="`--items-count: ${ values?.length }; --active-item-index: ${ activeIndex }`">
+    <div class="rs-switch__selected-item-background"></div>
+    @for (item of values; track item.key) {
+      <label class="rs-switch__item" [ngClass]="{ selected: item.key === value }">
+        <span class="rs-switch__item-label">{{ item.value }}</span>
+        <input type="radio" [attr.name]="name" [value]="item.key" [checked]="value === item.key" (change)="handleChangeEvent(item.key)" />
+      </label>
+    }
+  </div>
+</div>

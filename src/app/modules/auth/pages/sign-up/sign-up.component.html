@@ -1,0 +1,24 @@
+<div class="sign-up" [formGroup]="form">
+  <div class="sign-up__content">
+    <rs-switch [values]="roles" name="role" formControlName="role">Select company role:</rs-switch>
+    <form-field>
+      <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
+      <span form-label-prefix>Email</span>
+      <input rs-input type="email" autocomplete="off" placeholder="name@company.com" formControlName="email">
+    </form-field>
+    <form-field>
+      <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
+      <span form-label-prefix>Password</span>
+      <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
+    </form-field>
+    <form-field>
+      <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
+      <span form-label-prefix>Confirm Password</span>
+      <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="confirmPassword">
+    </form-field>
+    <button type="button" rs-button-filled size="sm" [disabled]="form.invalid">Create Account</button>
+  </div>
+  <div class="sign-up__have-account">
+    <span>Already have an account? <a routerLink="/authorization/sign-in">Log In</a></span>
+  </div>
+</div>

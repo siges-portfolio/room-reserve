@@ -1,0 +1,31 @@
+<aside class="sidebar">
+  <div class="sidebar__header">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <mat-icon class="material-symbols-outlined" fontIcon="calendar_month"></mat-icon>
+      </div>
+      <h5>RoomReserve</h5>
+    </div>
+  </div>
+  <nav class="navigation sidebar__navigation">
+    @for (group of navigation; track group.title) {
+      <div class="navigation__group sidebar__navigation-group">
+        <div class="navigation__group-title">{{ group.title }}</div>
+        <div class="navigation__group-items">
+          @for (item of group.items; track item.id) {
+            <a [routerLink]="item.url" routerLinkActive="active" class="navigation__item">
+              <mat-icon class="navigation__item-icon icon icon--sm material-symbols-outlined" [fontIcon]="item.icon"></mat-icon>
+              <div class="navigation__item-title">{{ item.title }}</div>
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </nav>
+  <div class="sidebar__footer">
+    <button rs-button color="warning" size="sm" class="sidebar__logout-button">
+      <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>

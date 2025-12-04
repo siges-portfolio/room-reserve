@@ -1,0 +1,33 @@
+@use "color-kit" as *;
+@use "_mixins/font-face" as *;
+
+// Variables
+$header-height: 56px;
+$sticky-top-offset: calc($header-height + 24px);
+
+// Font imports
+@include font-face('Inter', normal, 900, '/assets/fonts/Inter/Inter-Black.woff2');
+@include font-face('Inter', normal, 800, '/assets/fonts/Inter/Inter-ExtraBold.woff2');
+@include font-face('Inter', normal, 700, '/assets/fonts/Inter/Inter-Bold.woff2');
+@include font-face('Inter', normal, 600, '/assets/fonts/Inter/Inter-SemiBold.woff2');
+@include font-face('Inter', normal, 500, '/assets/fonts/Inter/Inter-Medium.woff2');
+@include font-face('Inter', normal, 400, '/assets/fonts/Inter/Inter-Regular.woff2');
+@include font-face('Inter', normal, 300, '/assets/fonts/Inter/Inter-Light.woff2');
+@include font-face('Inter', normal, 200, '/assets/fonts/Inter/Inter-ExtraLight.woff2');
+
+@include font-face('Jakarta', normal, 700, '/assets/fonts/Jakarta/Jakarta-Bold.woff2');
+@include font-face('Jakarta', normal, 600, '/assets/fonts/Jakarta/Jakarta-SemiBold.woff2');
+@include font-face('Jakarta', normal, 500, '/assets/fonts/Jakarta/Jakarta-Medium.woff2');
+@include font-face('Jakarta', normal, 400, '/assets/fonts/Jakarta/Jakarta-Regular.woff2');
+@include font-face('Jakarta', normal, 300, '/assets/fonts/Jakarta/Jakarta-Light.woff2');
+@include font-face('Jakarta', normal, 200, '/assets/fonts/Jakarta/Jakarta-ExtraLight.woff2');
+@include font-face('Jakarta', normal, 100, '/assets/fonts/Jakarta/Jakarta-Thin.woff2');
+
+// Theming
+@each $themeName, $theme in $themes {
+  body.#{$themeName}-theme {
+    @each $colorName, $hex in $theme {
+      --#{$colorName}-color: #{$hex}
+    }
+  }
+}

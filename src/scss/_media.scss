@@ -1,0 +1,12 @@
+$container-padding: 24px;
+$container-breakpoints: (
+  xs: 576px,
+  sm: 743px,
+  md: 992px,
+  lg: 1280px,
+  xl: 1440px,
+  xxl: 1680px,
+  xxxl: 1920px,
+);
+
+@forward '_mixins/breakpoints';

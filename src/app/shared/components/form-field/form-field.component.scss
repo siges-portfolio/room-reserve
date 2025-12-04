@@ -1,0 +1,142 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &.error.touched {
+    .form-field__inner {
+      border-color: var(--error-color);
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--neutral-100-color);
+  }
+
+  &__label-link {
+    color: var(--primary-color);
+
+    &:hover {
+      color: color-mix(in srgb, var(--primary-color) 85%, transparent);
+    }
+  }
+
+  &__inner {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    transition: border-color ease-in-out .15s;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--neutral-100-color) 25%, transparent);
+
+      .form-field__prefix {
+        color: color-mix(in srgb, var(--neutral-100-color) 45%, transparent);
+      }
+    }
+  }
+
+  &__prefix,
+  &__suffix {
+    display: flex;
+    color: color-mix(in srgb, var(--neutral-100-color) 25%, transparent);
+    transition: color ease-in-out .15s;
+  }
+
+  &__prefix,
+  &__suffix,
+  &__messages-container,
+  &__show-password {
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__messages-notification {
+    display: flex;
+    padding: 4px;
+
+    border-radius: 50%;
+
+    &--error {
+      background-color: color-mix(in srgb, var(--error-color) 15%, transparent);
+      color: var(--error-color);
+      cursor: help;
+
+      &:hover {
+        background-color: color-mix(in srgb, var(--error-color) 30%, transparent);
+      }
+    }
+
+    &--success {
+      background-color: color-mix(in srgb, var(--success-color) 20%, transparent);
+      color: var(--success-color);
+    }
+  }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    font-size: 12px;
+
+  }
+
+  &__messages-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+      padding: 3px;
+      border-radius: 50%;
+      color: var(--error-color);
+      background-color: color-mix(in srgb, var(--error-color) 20%, transparent);
+    }
+
+    mark {
+      font-weight: 600;
+      color: var(--success-color);
+      background: none;
+
+      &.actual {
+        color: var(--error-color)
+      }
+    }
+  }
+
+  &__show-password {
+    display: flex;
+    cursor: pointer;
+    color: var(--neutral-50-color);
+
+    &:hover {
+      color: var(--neutral-100-color);
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+}

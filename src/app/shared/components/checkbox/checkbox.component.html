@@ -1,0 +1,9 @@
+<label class="rs-checkbox">
+  <span class="rs-checkbox__custom" [ngClass]="{ checked }">
+    <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="check"></mat-icon>
+  </span>
+  <span class="rs-checkbox__content">
+    <ng-content></ng-content>
+  </span>
+  <input type="checkbox" [checked]="checked" [disabled]="disabled" (change)="handleChangeEvent()">
+</label>

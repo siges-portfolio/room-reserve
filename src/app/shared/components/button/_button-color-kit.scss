@@ -1,0 +1,18 @@
+$button-color-kit: (
+  primary: (
+    accent: var(--primary-color),
+    secondary: var(--neutral-0-color),
+  ),
+  warning: (
+    accent: var(--error-color),
+    secondary: var(--neutral-0-color),
+  ),
+  light: (
+    accent: var(--neutral-100-color),
+    secondary: var(--neutral-0-color),
+  ),
+  gray: (
+    accent: var(--neutral-50-color),
+    secondary: var(--neutral-0-color),
+  ),
+)

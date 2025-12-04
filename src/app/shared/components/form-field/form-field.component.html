@@ -1,0 +1,82 @@
+<div class="form-field__label">
+  <div class="form-field__label-left">
+    <ng-content select="[form-label-prefix]"></ng-content>
+  </div>
+  <div class="form-field__label-link">
+    <ng-content select="[form-label-suffix='link']"></ng-content>
+  </div>
+</div>
+<div class="form-field__inner">
+  <div class="form-field__prefix">
+    <ng-content select="[form-prefix]"></ng-content>
+  </div>
+  <div class="form-field__content">
+    <ng-content></ng-content>
+  </div>
+  <div class="form-field__messages-container">
+    @if (messages()) {
+      <span class="form-field__messages-notification form-field__messages-notification--error" [tooltip]="messages() ? messagesTooltip : null">
+          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="question_mark"></mat-icon>
+        </span>
+    } @else if (isTouched()) {
+      <span class="form-field__messages-notification form-field__messages-notification--success">
+          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="check"></mat-icon>
+        </span>
+    }
+  </div>
+  <div class="form-field__suffix">
+    <ng-content select="[form-suffix]"></ng-content>
+  </div>
+  @if (isPassword()) {
+    <div class="form-field__show-password" (click)="togglePasswordVisibility()">
+      @if (fieldType() === 'password') {
+        <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="visibility"></mat-icon>
+      } @else {
+        <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="visibility_off"></mat-icon>
+      }
+    </div>
+  }
+</div>
+
+<ng-template #messagesTooltip>
+  <ng-container *ngTemplateOutlet="messagesTooltipContent; context: { messages: messages() }"></ng-container>
+</ng-template>
+
+<ng-template #messagesTooltipContent let-messages="messages">
+  <div class="form-field__messages">
+    @for (message of messages; track message.key) {
+      <div class="form-field__messages-item">
+        <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="close"></mat-icon>
+        @switch (message.key) {
+          @case ('required') {
+            <span>This field is required.</span>
+          }
+          @case ('minlength') {
+            <span>Minimum length is <mark>{{ message.value.requiredLength }}</mark> characters, current length: <mark class="actual">{{ message.value.actualLength }}</mark>.</span>
+          }
+          @case ('maxlength') {
+            <span>Maximum length is <mark>{{ message.value.requiredLength }}</mark> characters, current length: <mark class="actual">{{ message.value.actualLength }}</mark>.</span>
+          }
+          @case ('validEmail') {
+            <span>Email address is invalid.</span>
+          }
+          @case ('passwordLowercase') {
+            <span>Password must contain at least one <mark>lowercase</mark> letter.</span>
+          }
+          @case ('passwordUppercase') {
+            <span>Password must contain at least one <mark>uppercase</mark> letter.</span>
+          }
+          @case ('passwordDigit') {
+            <span>Password must contain at least one <mark>digit</mark>.</span>
+          }
+          @case ('passwordSymbol') {
+            <span>Password must contain at least one <mark>special symbol</mark>.</span>
+          }
+          @case ('passwordMatch') {
+            <span>Passwords do not match.</span>
+          }
+        }
+      </div>
+    }
+  </div>
+</ng-template>

@@ -1,0 +1,108 @@
+@use '_mixins/rem' as *;
+@use "button-color-kit" as *;
+
+.rs-button {
+  --rs-button-icon-size: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+
+  color: inherit;
+  font-family: 'Inter', sans-serif;
+
+  border-radius: var(--rs-button-border-radius, 8px);
+  padding: var(--rs-button-padding-y, 12px) var(--rs-button-padding-x, 16px);
+  font-size: var(--rs-button-font-size, 16px);
+  font-weight: var(--rs-button-font-weight, 500);
+
+  cursor: pointer;
+
+  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+
+  &:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  &--sm {
+    --rs-button-icon-size: 32px;
+    --rs-button-border-radius: 6px;
+    --rs-button-padding-y: 8px;
+    --rs-button-padding-x: 14px;
+    --rs-button-font-size: 14px;
+  }
+
+  &--lg {
+    --rs-button-icon-size: 48px;
+    --rs-button-border-radius: 10px;
+    --rs-button-padding-y: 16px;
+    --rs-button-padding-x: 24px;
+    --rs-button-font-size: 18px;
+  }
+
+  @each $kitName, $kit in $button-color-kit {
+    &--#{ "" + $kitName } {
+      @each $colorName, $color in $kit {
+        --button-#{ $colorName }-color: #{ $color };
+      }
+    }
+  }
+}
+
+.rs-button.flat {
+  background-color: transparent;
+  color: var(--button-accent-color);
+
+  &:hover {
+    color: color-mix(in srgb, var(--neutral-50-color) 0%, var(--neutral-100-color));
+    background-color: color-mix(in srgb, var(--button-accent-color) 10%, transparent);
+  }
+}
+
+.rs-button.filled {
+  background-color: var(--button-accent-color);
+  color: var(--button-secondary-color);
+
+  &.rs-button--light {
+    &:hover {
+      background-color: color-mix(in srgb, var(--button-accent-color) 80%, black);
+    }
+  }
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--button-accent-color) 80%, white);
+  }
+}
+
+.rs-button.outlined {
+  border: 2px solid var(--button-accent-color);
+  color: var(--button-accent-color);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--button-accent-color) 10%, transparent);
+  }
+}
+
+.rs-button.icon {
+  padding: 0;
+  width: var(--rs-button-icon-size) !important;
+  height: var(--rs-button-icon-size) !important;
+
+  mat-icon {
+    width: calc(var(--rs-button-icon-size) * 0.5);
+    height: calc(var(--rs-button-icon-size) * 0.5);
+    font-size: calc(var(--rs-button-icon-size) * 0.5);
+  }
+}

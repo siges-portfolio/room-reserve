@@ -1,0 +1,8 @@
+<div class="rs-tooltip">
+  @if (string) {
+    <span>{{ string }}</span>
+  }
+  @if (template) {
+    <ng-template [ngTemplateOutlet]="template"></ng-template>
+  }
+</div>
