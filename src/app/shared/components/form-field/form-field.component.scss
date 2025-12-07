@@ -3,6 +3,28 @@
   flex-direction: column;
   gap: 8px;
 
+  &.flat {
+    .form-field {
+      &__inner {
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  &.textarea {
+    .form-field {
+      &__inner {
+        align-items: flex-start;
+      }
+
+      &__prefix,
+      &__suffix {
+        padding-top: 2px;
+      }
+    }
+  }
+
   &.disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -34,6 +56,11 @@
     }
   }
 
+  &__label-counter {
+    font-size: 12px;
+    color: var(--neutral-50-color);
+  }
+
   &__inner {
     position: relative;
 
@@ -41,7 +68,7 @@
     align-items: center;
     gap: 10px;
 
-    padding: 10px 12px;
+    padding: 8px 12px;
 
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -66,7 +93,8 @@
   &__prefix,
   &__suffix,
   &__messages-container,
-  &__show-password {
+  &__show-password,
+  &__label-link {
     &:empty {
       display: none;
     }

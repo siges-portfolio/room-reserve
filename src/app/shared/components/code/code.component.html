@@ -1,0 +1,14 @@
+<div class="code" [attr.style]="`--symbols-count: ${ count() }`">
+  @for (item of items(); track item.key; let i = $index) {
+    <input
+      #itemInput
+      class="code__item"
+      type="text"
+      [attr.id]="`code-${ i }`"
+      [value]="getItem(i).value"
+      (blur)="onBlur()"
+      (paste)="onPaste($event)"
+      (keydown)="onKeydown($event, i)"
+    >
+  }
+</div>

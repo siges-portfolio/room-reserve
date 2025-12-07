@@ -3,6 +3,7 @@
 
 .rs-button {
   --rs-button-icon-size: 40px;
+  min-height: var(--rs-button-height, 40px);
 
   display: flex;
   align-items: center;
@@ -17,8 +18,8 @@
   font-family: 'Inter', sans-serif;
 
   border-radius: var(--rs-button-border-radius, 8px);
-  padding: var(--rs-button-padding-y, 12px) var(--rs-button-padding-x, 16px);
-  font-size: var(--rs-button-font-size, 16px);
+  padding: 0 var(--rs-button-padding-x, 16px);
+  font-size: var(--rs-button-font-size, 14px);
   font-weight: var(--rs-button-font-weight, 500);
 
   cursor: pointer;
@@ -39,16 +40,14 @@
   &--sm {
     --rs-button-icon-size: 32px;
     --rs-button-border-radius: 6px;
-    --rs-button-padding-y: 8px;
-    --rs-button-padding-x: 14px;
+    --rs-button-height: 32px;
     --rs-button-font-size: 14px;
   }
 
   &--lg {
     --rs-button-icon-size: 48px;
     --rs-button-border-radius: 10px;
-    --rs-button-padding-y: 16px;
-    --rs-button-padding-x: 24px;
+    --rs-button-height: 48px;
     --rs-button-font-size: 18px;
   }
 

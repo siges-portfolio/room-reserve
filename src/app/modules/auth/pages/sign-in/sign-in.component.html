@@ -1,4 +1,8 @@
 <div class="sign-in" [formGroup]="form">
+  <div class="sign-in__header">
+    <div class="sign-in__title">Authorization</div>
+    <div class="sign-in__subtitle">Login to your account to continue.</div>
+  </div>
   <div class="sign-in__content">
     <form-field [hideValidation]="true">
       <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
@@ -12,7 +16,7 @@
       <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
     </form-field>
     <rs-checkbox formControlName="remember">Remember me</rs-checkbox>
-    <button type="button" rs-button-filled size="sm" [disabled]="form.invalid">Sign In</button>
+    <button type="button" rs-button-filled [disabled]="form.invalid">Sign In</button>
   </div>
   <div class="sign-in__create-account">
     <span>Dont have an account? <a routerLink="/authorization/sign-up">Register</a></span>

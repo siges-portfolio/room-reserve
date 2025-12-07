@@ -67,24 +67,8 @@
   &__content-wrapper {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 
     background-color: var(--section-color);
     border-radius: rem(16px);
-  }
-
-  &__content-header {
-    padding: rem(32px);
-    background-color: var(--border-color);
-    text-align: left;
-  }
-
-  &__content-title {
-    color: var(--neutral-100-color);
-    font-weight: 600;
-  }
-
-  &__content-subtitle {
-    font-size: 14px;
   }
 }

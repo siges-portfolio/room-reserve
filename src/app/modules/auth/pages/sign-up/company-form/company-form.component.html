@@ -1,0 +1,18 @@
+<ng-container [formGroup]="form">
+  <form-field>
+    <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="account_balance"></mat-icon>
+    <span form-label-prefix>Company name</span>
+    <input rs-input type="text" autocomplete="off" placeholder="Enter company name" formControlName="name">
+  </form-field>
+  <form-field>
+    <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="description"></mat-icon>
+    <span form-label-prefix>Company description</span>
+    <textarea rs-input rows="3" autocomplete="off" placeholder="Enter company description" formControlName="description"></textarea>
+  </form-field>
+  <div class="sign-up__buttons">
+    <button class="sign-up__button sign-up__button--back" rs-button-outlined rs-button-icon (click)="onAction('back')">
+      <mat-icon class="material-symbols-outlined" fontIcon="arrow_back"></mat-icon>
+    </button>
+    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-filled [loading]="loading()" [disabled]="form.invalid" (click)="onAction('submit')">Continue</button>
+  </div>
+</ng-container>

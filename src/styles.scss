@@ -73,6 +73,38 @@ textarea {
   }
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+  padding: 0 0 0 8px;
+  list-style: none;
+
+  li {
+    gap: 4px;
+
+    &:before {
+      width: 4px;
+      min-width: 4px;
+      height: 4px;
+      aspect-ratio: 1/1;
+
+      display: inline-block;
+      margin-right: 4px;
+
+      content: '';
+      border-radius: 50%;
+      background-color: color-mix(in srgb, var(--neutral-50-color) 85%, transparent);
+      vertical-align: middle;
+    }
+  }
+}
+
+textarea {
+  resize: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 

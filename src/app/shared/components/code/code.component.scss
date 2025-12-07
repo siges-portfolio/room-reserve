@@ -1,0 +1,30 @@
+@use "_mixins/rem";
+
+.code {
+  max-width: 400px;
+
+  display: grid;
+  grid-template-columns: repeat(var(--symbols-count), 1fr);
+  grid-gap: 8px;
+
+  &__item {
+    aspect-ratio: 1/1;
+
+    border: 2px solid var(--border-color);
+    box-sizing: border-box;
+    border-radius: 8px;
+
+    text-align: center;
+
+    font-size: 24px;
+    font-family: 'Jakarta', sans-serif;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus{
+      border-color: color-mix(in srgb, var(--neutral-100-color) 25%, transparent);
+    }
+  }
+}

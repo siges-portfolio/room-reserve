@@ -1,0 +1,11 @@
+<ng-container>
+  <form-field [hideValidation]="true" appearance="flat">
+    <span form-label-prefix>Enter code:</span>
+    <code-input [formControl]="codeControl"></code-input>
+  </form-field>
+  <div class="sign-up__resend">Didn't receive the email? Check your spam folder or click the button below @if (!resendActive()) { <span>in {{ timer() }} seconds</span> }</div>
+  <div class="sign-up__buttons sign-up__buttons--column">
+    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-outlined [disabled]="!resendActive()">Resend code</button>
+    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-filled [loading]="loading()" [disabled]="codeControl.invalid" (click)="onSubmit()">Create account</button>
+  </div>
+</ng-container>

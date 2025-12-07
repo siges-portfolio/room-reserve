@@ -1,0 +1,21 @@
+<ng-container [formGroup]="form">
+  <rs-switch [values]="roles" name="role" formControlName="role">Select role:</rs-switch>
+  <form-field>
+    <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
+    <span form-label-prefix>Email</span>
+    <input rs-input type="email" autocomplete="off" placeholder="name@company.com" formControlName="email">
+  </form-field>
+  <form-field>
+    <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
+    <span form-label-prefix>Password</span>
+    <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
+  </form-field>
+  <form-field>
+    <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
+    <span form-label-prefix>Confirm Password</span>
+    <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="confirmPassword">
+  </form-field>
+  <div class="sign-up__buttons">
+    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-filled [loading]="loading()" [disabled]="form.invalid" (click)="submit()">{{ role === 'user' ? 'Create account' : 'Continue'  }}</button>
+  </div>
+</ng-container>
