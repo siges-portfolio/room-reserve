@@ -4,6 +4,7 @@
 .rs-button {
   --rs-button-icon-size: 40px;
   min-height: var(--rs-button-height, 40px);
+  min-width: var(--rs-button-height, 40px);
 
   display: flex;
   align-items: center;
@@ -35,6 +36,13 @@
   &.loading {
     pointer-events: none;
     opacity: 0.8;
+  }
+
+  &--xs {
+    --rs-button-icon-size: 24px;
+    --rs-button-border-radius: 50%;
+    --rs-button-height: 24px;
+    --rs-button-font-size: 14px;
   }
 
   &--sm {

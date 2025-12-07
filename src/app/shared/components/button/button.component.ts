@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, input, OnInit, ViewEncapsulation } from '@angular/core';
 
-type RSButtonColor = 'primary' | 'warning' | 'light' | 'gray';
-type RSButtonSize = 'sm' | 'md' | 'lg';
+type RSButtonColor = 'primary' | 'warning' | 'light' | 'gray' | 'dark';
+type RSButtonSize = 'sm' | 'md' | 'lg' | 'xs';
 
 @Component({
   standalone: true,

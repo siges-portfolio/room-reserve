@@ -45,7 +45,9 @@
       }
     }
   </div>
-  <div class="sign-up__have-account">
-    <span>Already have an account? <a routerLink="/authorization/sign-in">Log In</a></span>
-  </div>
+  @if (currentStep() !== steps.FINISH) {
+    <div class="sign-up__have-account">
+      <span>Already have an account? <a routerLink="/authorization/sign-in">Log In</a></span>
+    </div>
+  }
 </div>

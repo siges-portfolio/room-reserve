@@ -1,0 +1,15 @@
+<div class="toast-container">
+  @for (toast of toasts(); track toast.id) {
+    <div class="toast-container__item" animate.enter="fade-down" animate.leave="fade-up" [ngClass]="toast.type">
+      @if (toast.icon) {
+        <div class="toast-container__item-icon">
+          <mat-icon class="material-symbols-outlined icon icon--xs" [fontIcon]="toast.icon"></mat-icon>
+        </div>
+      }
+      <span>{{ toast.message }}</span>
+      <button rs-button rs-button-icon size="xs" color="dark" class="toast-container__item-close" (click)="onClose(toast.id)">
+        <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="close"></mat-icon>
+      </button>
+    </div>
+  }
+</div>

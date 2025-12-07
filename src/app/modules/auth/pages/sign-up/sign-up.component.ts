@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { CompanyFormComponent } from '@modules/auth/pages/sign-up/company-form/c
 import { UserFormComponent } from '@modules/auth/pages/sign-up/user-form/user-form.component';
 import { ConfirmEmailFormComponent } from '@modules/auth/pages/sign-up/confirm-email-form/confirm-email-form.component';
 import { SignUpFinishComponent } from '@modules/auth/pages/sign-up/sign-up-finish/sign-up-finish.component';
+import { ToastService } from '@shared/components/toast/toast.service';
 
 enum SignUpSteps {
   USER = 'USER',
@@ -31,10 +32,12 @@ export type SignUpFormData = Record<string, { [key: string]: any }>;
     CompanyFormComponent,
     UserFormComponent,
     ConfirmEmailFormComponent,
-    SignUpFinishComponent
+    SignUpFinishComponent,
   ]
 })
 export class SignUpComponent implements OnDestroy {
+  toastService = inject(ToastService);
+
   destroy$: Subject<void> = new Subject<void>();
   steps = SignUpSteps;
 
@@ -67,6 +70,7 @@ export class SignUpComponent implements OnDestroy {
       })
 
       this.currentStep.set(this.steps.FINISH);
+      this.toastService.showToast('success', 'Account created successfully', 'check')
       console.log(this.data())
     } catch (error) {
       console.log(error);
