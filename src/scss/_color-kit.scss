@@ -1,30 +1,71 @@
 $themes: (
   'dark': (
     primary: #3B82F6,
+
     neutral-100: #F8FAFC,
-    neutral-50: #94A3B8,
-    neutral-0: #0F172A,
-    background: #0F1729,
-    sidebar: #18181B,
-    section: #0F1729,
-    border: #1E293B,
-    navigation-active: #27272A,
-    error: #ff5959,
-    warning: #e8c742,
-    success: #09dc58
-  ),
-  'light': (
-    primary: #3B82F6,
-    neutral-100: #0F172A,
+    neutral-90: #F1F5F9,
+    neutral-80: #E2E8F0,
+    neutral-70: #CBD5E1,
+    neutral-60: #94A3B8,
     neutral-50: #64748B,
-    neutral-0: #F8FAFC,
+    neutral-40: #475569,
+    neutral-30: #334155,
+    neutral-20: #1E293B,
+    neutral-10: #0F172A,
+    neutral-0: #0F172A,
+
+    background: #0F1729,
+    sidebar: #1E293B,
+    section: #1A2332,
+    card: #1E293B,
+
+    border: #334155,
+    border-hover: #475569,
+    divider: #1E293B,
+
+    navigation-active: #1a2434,
+
+    error: #F87171,
+    warning: #FBBF24,
+    success: #10B981,
+    info: #60A5FA,
+
+    overlay: rgba(0, 0, 0, 0.7),
+    backdrop: rgba(15, 23, 42, 0.8)
+  ),
+
+  'light': (
+    primary: #2563EB,
+
+    neutral-100: #0F172A,
+    neutral-90: #1E293B,
+    neutral-80: #334155,
+    neutral-70: #475569,
+    neutral-60: #64748B,
+    neutral-50: #94A3B8,
+    neutral-40: #CBD5E1,
+    neutral-30: #E2E8F0,
+    neutral-20: #F1F5F9,
+    neutral-10: #F8FAFC,
+    neutral-0: #FFFFFF,
+
     background: #FFFFFF,
-    sidebar: #F1F5F9,
+    sidebar: #F8FAFC,
     section: #FFFFFF,
+    card: #FFFFFF,
+
     border: #E2E8F0,
-    navigation-active: #e5eaee,
+    border-hover: #CBD5E1,
+    divider: #F1F5F9,
+
+    navigation-active: #EDF2F7,
+
     error: #DC2626,
     warning: #D97706,
-    success: #059669
+    success: #059669,
+    info: #2563EB,
+
+    overlay: rgba(255, 255, 255, 0.7),
+    backdrop: rgba(15, 23, 42, 0.4)
   )
-)
+);

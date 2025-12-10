@@ -2,7 +2,7 @@
 
 :host {
   --items-padding: 2px;
-  --border-radius: 8px;
+  --border-radius: var(--radius-lg);
 }
 
 .rs-switch {
@@ -76,6 +76,6 @@
     border-radius: calc(var(--border-radius) - 2px);
 
     background-color: var(--section-color);
-    transition: left .15s ease-in-out;
+    transition: left var(--transition-fast);
   }
 }

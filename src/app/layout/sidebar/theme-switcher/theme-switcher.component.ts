@@ -3,13 +3,14 @@ import { ThemeService } from '@core/services/theme';
 import { SwitchComponent } from '@shared/components/switch/switch.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   standalone: true,
   selector: 'theme-switcher',
   templateUrl: './theme-switcher.component.html',
   styleUrls: ['./theme-switcher.component.scss'],
-  imports: [SwitchComponent, ReactiveFormsModule]
+  imports: [SwitchComponent, ReactiveFormsModule, TranslocoDirective]
 })
 export class ThemeSwitcherComponent implements OnDestroy {
   destroy$: Subject<void> = new Subject<void>();

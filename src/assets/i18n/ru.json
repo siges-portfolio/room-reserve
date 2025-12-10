@@ -1,1 +1,17 @@
-{}
+{
+  "sidebar": {
+    "navigation": "Навигация",
+    "admin": "Администратор",
+    "select-language": "Выбрать язык",
+    "switch-theme": "Сменить тему",
+    "logout": "Выйти",
+    "navigation-items": {
+      "dashboard": "Панель управления",
+      "book-room": "Забронировать комнату",
+      "my-bookings": "Мои бронирования",
+      "overview": "Обзор",
+      "rooms": "Комнаты",
+      "users": "Пользователи"
+    }
+  }
+}

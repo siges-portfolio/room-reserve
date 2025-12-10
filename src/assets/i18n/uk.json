@@ -1,1 +1,17 @@
-{}
+{
+  "sidebar": {
+    "navigation": "Навігація",
+    "admin": "Адміністратор",
+    "select-language": "Обрати мову",
+    "switch-theme": "Змінити тему",
+    "logout": "Вийти",
+    "navigation-items": {
+      "dashboard": "Панель керування",
+      "book-room": "Забронювати кімнату",
+      "my-bookings": "Мої бронювання",
+      "overview": "Огляд",
+      "rooms": "Кімнати",
+      "users": "Користувачі"
+    }
+  }
+}

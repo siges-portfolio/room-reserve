@@ -4,16 +4,17 @@
   gap: 8px;
 
   padding: 6px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
 
   cursor: pointer;
 
   &:hover,
   &.active {
-    background-color: color-mix(in srgb, var(--border-color) 90%, black);
+    color: var(--neutral-100-color);
+    background-color: color-mix(in srgb, var(--neutral-30-color) 90%, black);
   }
 
   mat-icon {

@@ -2,6 +2,9 @@
 
 .rs-select {
   &__button {
+    font-weight: 600;
+    color: var(--neutral-100-color);
+
     * {
       pointer-events: none;
     }
@@ -17,7 +20,7 @@
     margin: 4px 0;
     padding: 4px;
 
-    border-radius: 8px;
-    background-color: var(--border-color);
+    border-radius: var(--radius-lg);
+    background-color: var(--neutral-30-color);
   }
 }

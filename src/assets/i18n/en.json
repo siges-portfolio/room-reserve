@@ -1,1 +1,17 @@
-{}
+{
+  "sidebar": {
+    "navigation": "Navigation",
+    "admin": "Admin",
+    "select-language": "Select language",
+    "switch-theme": "Switch theme",
+    "logout": "Logout",
+    "navigation-items": {
+      "dashboard": "Dashboard",
+      "book-room": "Book Room",
+      "my-bookings": "My Bookings",
+      "overview": "Overview",
+      "rooms": "Rooms",
+      "users": "Users"
+    }
+  }
+}

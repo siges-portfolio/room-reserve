@@ -16,16 +16,16 @@
   box-sizing: border-box;
 
   color: inherit;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', sans-serif;
 
-  border-radius: var(--rs-button-border-radius, 8px);
+  border-radius: var(--rs-button-border-radius, var(--radius-md));
   padding: 0 var(--rs-button-padding-x, 16px);
   font-size: var(--rs-button-font-size, 14px);
   font-weight: var(--rs-button-font-weight, 500);
 
   cursor: pointer;
 
-  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 
   &:disabled {
     opacity: 0.4;
@@ -47,14 +47,14 @@
 
   &--sm {
     --rs-button-icon-size: 32px;
-    --rs-button-border-radius: 6px;
+    --rs-button-border-radius: var(--radius-sm);
     --rs-button-height: 32px;
     --rs-button-font-size: 14px;
   }
 
   &--lg {
     --rs-button-icon-size: 48px;
-    --rs-button-border-radius: 10px;
+    --rs-button-border-radius: var(--radius-lg);
     --rs-button-height: 48px;
     --rs-button-font-size: 18px;
   }

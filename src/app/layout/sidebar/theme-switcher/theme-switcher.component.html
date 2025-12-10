@@ -1,1 +1,3 @@
-<rs-switch class="theme-switcher" labelPosition="left" valueType="icon" [values]="themes" [formControl]="switchControl">Switch theme</rs-switch>
+<ng-container *transloco="let t">
+  <rs-switch class="theme-switcher" labelPosition="left" valueType="icon" [values]="themes" [formControl]="switchControl">{{ t('sidebar.switch-theme') }}</rs-switch>
+</ng-container>

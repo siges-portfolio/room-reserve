@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="sidebar" *transloco="let t; prefix: 'sidebar'">
   <div class="sidebar__header">
     <div class="sidebar__logo">
       <div class="sidebar__logo-icon">
@@ -10,12 +10,12 @@
   <nav class="navigation sidebar__navigation">
     @for (group of navigation; track group.title) {
       <div class="navigation__group sidebar__navigation-group">
-        <div class="navigation__group-title">{{ group.title }}</div>
+        <div class="navigation__group-title">{{ t(group.title) }}</div>
         <div class="navigation__group-items">
           @for (item of group.items; track item.id) {
             <a [routerLink]="item.url" routerLinkActive="active" class="navigation__item">
               <mat-icon class="navigation__item-icon icon icon--sm material-symbols-outlined" [fontIcon]="item.icon"></mat-icon>
-              <div class="navigation__item-title">{{ item.title }}</div>
+              <div class="navigation__item-title">{{ t(item.title) }}</div>
             </a>
           }
         </div>
@@ -32,7 +32,7 @@
     <div class="sidebar__logout">
       <button rs-button color="warning" class="sidebar__logout-button">
         <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
-        <span>Logout</span>
+        <span>{{ t('logout') }}</span>
       </button>
     </div>
   </div>

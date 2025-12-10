@@ -6,14 +6,13 @@ $header-height: 56px;
 $sticky-top-offset: calc($header-height + 24px);
 
 // Font imports
-@include font-face('Inter', normal, 900, '/assets/fonts/Inter/Inter-Black.woff2');
-@include font-face('Inter', normal, 800, '/assets/fonts/Inter/Inter-ExtraBold.woff2');
-@include font-face('Inter', normal, 700, '/assets/fonts/Inter/Inter-Bold.woff2');
-@include font-face('Inter', normal, 600, '/assets/fonts/Inter/Inter-SemiBold.woff2');
-@include font-face('Inter', normal, 500, '/assets/fonts/Inter/Inter-Medium.woff2');
-@include font-face('Inter', normal, 400, '/assets/fonts/Inter/Inter-Regular.woff2');
-@include font-face('Inter', normal, 300, '/assets/fonts/Inter/Inter-Light.woff2');
-@include font-face('Inter', normal, 200, '/assets/fonts/Inter/Inter-ExtraLight.woff2');
+@include font-face('Manrope', normal, 800, '/assets/fonts/Manrope/Manrope-ExtraBold.woff2');
+@include font-face('Manrope', normal, 700, '/assets/fonts/Manrope/Manrope-Bold.woff2');
+@include font-face('Manrope', normal, 600, '/assets/fonts/Manrope/Manrope-SemiBold.woff2');
+@include font-face('Manrope', normal, 500, '/assets/fonts/Manrope/Manrope-Medium.woff2');
+@include font-face('Manrope', normal, 400, '/assets/fonts/Manrope/Manrope-Regular.woff2');
+@include font-face('Manrope', normal, 300, '/assets/fonts/Manrope/Manrope-Light.woff2');
+@include font-face('Manrope', normal, 200, '/assets/fonts/Manrope/Manrope-ExtraLight.woff2');
 
 @include font-face('Jakarta', normal, 700, '/assets/fonts/Jakarta/Jakarta-Bold.woff2');
 @include font-face('Jakarta', normal, 600, '/assets/fonts/Jakarta/Jakarta-SemiBold.woff2');
@@ -30,4 +29,19 @@ $sticky-top-offset: calc($header-height + 24px);
       --#{$colorName}-color: #{$hex}
     }
   }
+}
+
+:root {
+  --spacing-unit: 0.25rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }

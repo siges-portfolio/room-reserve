@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FormFieldComponent } from '@shared/components/form-field/form-field.component';
 import { OptionComponent } from '@shared/components/option/option.component';
 import { SelectComponent } from '@shared/components/select/select.component';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { UpperCasePipe } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { LocalizationService } from '@core/services/localization';
@@ -16,7 +16,8 @@ import { LocalizationService } from '@core/services/localization';
     OptionComponent,
     SelectComponent,
     ReactiveFormsModule,
-    UpperCasePipe
+    UpperCasePipe,
+    TranslocoDirective
   ],
   templateUrl: './language-switcher.component.html'
 })

@@ -7,7 +7,7 @@
 }
 
 .form-enter {
-  animation: fadeIn 150ms ease forwards;
+  animation: fadeIn var(--transition-fast) forwards;
 }
 
 @keyframes fadeIn {

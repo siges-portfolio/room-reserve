@@ -1,8 +1,10 @@
-<form-field appearance="flat" labelPosition="left">
-  <span form-label-prefix>Select language</span>
-  <rs-select [label]="selectedLang() ? (selectedLang() | uppercase) : 'Select language'" [formControl]="control">
-    @for (lang of availableLangs(); track lang) {
-      <rs-option [value]="lang" [selected]="selectedLang() === lang">{{ lang | uppercase }}</rs-option>
-    }
-  </rs-select>
-</form-field>
+<ng-container *transloco="let t">
+  <form-field appearance="flat" labelPosition="left">
+    <span form-label-prefix>{{ t('sidebar.select-language') }}</span>
+    <rs-select [label]="selectedLang() ? (selectedLang() | uppercase) : t('sidebar.select-language')" [formControl]="control">
+      @for (lang of availableLangs(); track lang) {
+        <rs-option [value]="lang" [selected]="selectedLang() === lang">{{ lang | uppercase }}</rs-option>
+      }
+    </rs-select>
+  </form-field>
+</ng-container>
