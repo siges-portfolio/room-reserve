@@ -1,21 +1,28 @@
-<ng-container [formGroup]="form">
-  <rs-switch [values]="roles" name="role" formControlName="role">Select role:</rs-switch>
+<ng-container [formGroup]="form" *transloco="let t; prefix: 'authorization'">
+  <rs-switch [values]="roles" name="role" formControlName="role">{{ t('sign-up.user-step.select-role') }}</rs-switch>
   <form-field>
     <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
-    <span form-label-prefix>Email</span>
-    <input rs-input type="email" autocomplete="off" placeholder="name@company.com" formControlName="email">
+    <span form-label-prefix>{{ t('fields.email.label') }}</span>
+    <input rs-input type="email" autocomplete="off" [placeholder]="t('fields.email.placeholder')" formControlName="email">
   </form-field>
   <form-field>
     <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
-    <span form-label-prefix>Password</span>
+    <span form-label-prefix>{{ t('fields.password.label') }}</span>
     <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
   </form-field>
   <form-field>
     <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
-    <span form-label-prefix>Confirm Password</span>
+    <span form-label-prefix>{{ t('fields.confirm-password.label') }}</span>
     <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="confirmPassword">
   </form-field>
-  <div class="sign-up__buttons">
-    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-filled [loading]="loading()" [disabled]="form.invalid" (click)="submit()">{{ role === 'user' ? 'Create account' : 'Continue'  }}</button>
+  <div class="auth-content__buttons">
+    <button
+      rs-button-filled
+      type="button"
+      class="auth-content__button auth-content__button--submit"
+      [loading]="loading()"
+      [disabled]="form.invalid"
+      (click)="submit()"
+    >{{ role === 'user' ? t('buttons.create-account') : t('buttons.continue')  }}</button>
   </div>
 </ng-container>

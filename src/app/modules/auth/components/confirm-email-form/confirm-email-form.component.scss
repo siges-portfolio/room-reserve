@@ -1,0 +1,11 @@
+.confirm-email {
+  &__resend {
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+
+    mark {
+      background-color: transparent;
+      color: var(--primary-color);
+    }
+  }
+}

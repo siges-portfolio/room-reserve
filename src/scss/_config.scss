@@ -25,7 +25,7 @@ $sticky-top-offset: calc($header-height + 24px);
 
 // Theming
 @each $themeName, $theme in $themes {
-  body.#{$themeName}-theme {
+  html.#{$themeName}-theme {
     @each $colorName, $hex in $theme {
       --#{$colorName}-color: #{$hex}
     }

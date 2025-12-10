@@ -1,4 +1,4 @@
-import { Component, effect, input, output, ViewEncapsulation } from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { FormFieldComponent } from '@shared/components/form-field/form-field.component';
 import { InputComponent } from '@shared/components/input/input.component';
@@ -15,13 +15,14 @@ import {
   symbol
 } from '@core/validators/auth.validator';
 import { SignUpFormData } from '@modules/auth/pages/sign-up/sign-up.component';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   standalone: true,
   selector: 'user-form',
   templateUrl: './user-form.component.html',
   host: {
-    class: 'sign-up__content',
+    class: 'auth-content__content',
   },
   imports: [
     ButtonComponent,
@@ -29,10 +30,13 @@ import { SignUpFormData } from '@modules/auth/pages/sign-up/sign-up.component';
     InputComponent,
     MatIcon,
     ReactiveFormsModule,
-    SwitchComponent
+    SwitchComponent,
+    TranslocoDirective
   ]
 })
 export class UserFormComponent {
+  translocoService = inject(TranslocoService);
+
   data = input<SignUpFormData>({});
   loading = input<boolean>(false);
 
@@ -40,8 +44,8 @@ export class UserFormComponent {
   continueCompany = output<SignUpFormData>();
 
   roles = {
-    user: 'Customer',
-    company: 'Company Owner'
+    user: this.translocoService.translate('authorization.sign-up.user-step.customer'),
+    company: this.translocoService.translate('authorization.sign-up.user-step.company-owner')
   }
 
   form: FormGroup = new FormGroup(

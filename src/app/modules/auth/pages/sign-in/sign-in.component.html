@@ -1,24 +1,24 @@
-<div class="sign-in" [formGroup]="form">
-  <div class="sign-in__header">
-    <div class="sign-in__title">Authorization</div>
-    <div class="sign-in__subtitle">Login to your account to continue.</div>
+<div class="sign-in auth-content" [formGroup]="form" *transloco="let t; prefix: 'authorization'">
+  <div class="auth-content__header">
+    <div class="auth-content__title">{{ t('sign-in.title') }}</div>
+    <div class="auth-content__subtitle">{{ t('sign-in.subtitle') }}</div>
   </div>
-  <div class="sign-in__content">
+  <div class="auth-content__content">
     <form-field [hideValidation]="true">
       <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
-      <span form-label-prefix>Email</span>
-      <input rs-input type="email" autocomplete="off" placeholder="name@company.com" formControlName="email">
+      <span form-label-prefix>{{ t('fields.email.label') }}</span>
+      <input rs-input type="email" autocomplete="off" [placeholder]="t('fields.email.placeholder')" formControlName="email">
     </form-field>
     <form-field [hideValidation]="true">
       <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="key"></mat-icon>
-      <span form-label-prefix>Password</span>
-      <a routerLink="/authorization/reset-password" form-label-suffix="link">Forgot password?</a>
+      <span form-label-prefix>{{ t('fields.password.label') }}</span>
+      <a routerLink="/authorization/reset-password" form-label-suffix="link">{{ t('fields.password.forgot') }}</a>
       <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
     </form-field>
-    <rs-checkbox formControlName="remember">Remember me</rs-checkbox>
-    <button type="button" rs-button-filled [disabled]="form.invalid">Sign In</button>
+    <rs-checkbox formControlName="remember">{{ t('sign-in.remember-me') }}</rs-checkbox>
+    <button class="auth-content__button" type="button" rs-button-filled [disabled]="form.invalid">{{ t('sign-in.button') }}</button>
   </div>
-  <div class="sign-in__create-account">
-    <span>Dont have an account? <a routerLink="/authorization/sign-up">Register</a></span>
+  <div class="auth-content__footer">
+    <span>{{ t('sign-in.dont-have-account') }} <a routerLink="/authorization/sign-up">{{ t('sign-in.register') }}</a></span>
   </div>
 </div>

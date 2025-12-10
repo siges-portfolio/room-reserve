@@ -82,13 +82,16 @@
   background-color: var(--button-accent-color);
   color: var(--button-secondary-color);
 
-  &.rs-button--light {
-    &:hover {
-      background-color: color-mix(in srgb, var(--button-accent-color) 80%, black);
+  &.rs-button--light,
+  &.rs-button--select {
+    &:hover,
+    &.active {
+      background-color: color-mix(in srgb, var(--button-accent-color) 90%, black);
     }
   }
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: color-mix(in srgb, var(--button-accent-color) 80%, white);
   }
 }

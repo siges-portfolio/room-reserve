@@ -1,0 +1,9 @@
+<div class="rs-option" [ngClass]="{ active: selected }">
+  @if (multiple()) {}
+  <span #label>
+    <ng-content></ng-content>
+  </span>
+  @if (selected) {
+    <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="check"></mat-icon>
+  }
+</div>

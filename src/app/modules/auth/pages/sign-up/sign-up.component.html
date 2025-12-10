@@ -1,21 +1,21 @@
-<div class="sign-up">
-  <div class="sign-up__header">
+<div class="sign-up auth-content" *transloco="let t; prefix: 'authorization'">
+  <div class="auth-content__header">
     @switch (currentStep()) {
       @case (steps.USER) {
-        <h6 class="sign-up__title">User registration</h6>
-        <div class="sign-up__subtitle">Create a new user to continue.</div>
+        <h6 class="auth-content__title">{{ t('sign-up.user-step.title') }}</h6>
+        <div class="auth-content__subtitle">{{ t('sign-up.user-step.subtitle') }}</div>
       }
       @case (steps.COMPANY) {
-        <h6 class="sign-up__title">Company registration</h6>
-        <div class="sign-up__subtitle">Create a new company to continue.</div>
+        <h6 class="auth-content__title">{{ t('sign-up.company-step.title') }}</h6>
+        <div class="auth-content__subtitle">{{ t('sign-up.company-step.subtitle') }}</div>
       }
       @case (steps.CONFIRM_EMAIL) {
-        <h6 class="sign-up__title">Confirm email</h6>
-        <div class="sign-up__subtitle">We have sent a confirmation code to <span>{{ data()['user']['email'] }}</span></div>
+        <h6 class="auth-content__title">{{ t('confirm.title') }}</h6>
+        <div class="auth-content__subtitle" [innerHTML]="t('confirm.subtitle', { email: data()['user']['email'] })"></div>
       }
       @case (steps.FINISH) {
-        <h6 class="sign-up__title">Account created successfully!</h6>
-        <div class="sign-up__subtitle">Your account has been successfully created and confirmed.</div>
+        <h6 class="auth-content__title">{{ t('sign-up.finish-step.title') }}</h6>
+        <div class="auth-content__subtitle">{{ t('sign-up.finish-step.subtitle') }}</div>
       }
     }
   </div>
@@ -38,16 +38,29 @@
         ></company-form>
       }
       @case (steps.CONFIRM_EMAIL) {
-        <confirm-email-form (submit)="onFinish($event)" [loading]="loading()"></confirm-email-form>
+        <confirm-email-form (submit)="onFinish()" [loading]="loading()"></confirm-email-form>
       }
       @case (steps.FINISH) {
-        <sign-up-finish></sign-up-finish>
+        <div class="auth-content__content">
+          <div class="auth-content__finish">
+            <h6>{{ t('sign-up.finish-step.what-next') }}</h6>
+            <ul>
+              <li>{{ t('sign-up.finish-step.fill-profile') }}</li>
+              <li>{{ t('sign-up.finish-step.explore-features') }}</li>
+              <li>{{ t('sign-up.finish-step.start-booking') }}</li>
+            </ul>
+          </div>
+          <div class="auth-content__buttons auth-content__buttons--column">
+            <a routerLink="/authorization" class="sign-up__button auth-content__button--submit" type="button" rs-button-outlined>{{ t('buttons.to-profile') }}</a>
+            <a routerLink="/authorization" class="auth-content__button auth-content__button--submit" type="button" rs-button-filled>{{ t('buttons.to-dashboard') }}</a>
+          </div>
+        </div>
       }
     }
   </div>
   @if (currentStep() !== steps.FINISH) {
-    <div class="sign-up__have-account">
-      <span>Already have an account? <a routerLink="/authorization/sign-in">Log In</a></span>
+    <div class="auth-content__footer">
+      <span>{{ t('sign-up.have-account') }} <a routerLink="/authorization/sign-in">{{ t('sign-up.log-in') }}</a></span>
     </div>
   }
 </div>

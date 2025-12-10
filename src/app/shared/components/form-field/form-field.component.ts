@@ -1,7 +1,9 @@
 import {
   Component,
-  computed, contentChild,
-  effect, ElementRef, input,
+  computed,
+  contentChild,
+  effect,
+  input,
   OnDestroy,
   signal, ViewEncapsulation
 } from '@angular/core';
@@ -9,11 +11,8 @@ import { TouchedChangeEvent, ValidationErrors } from '@angular/forms';
 import { TooltipDirective } from '@shared/components/tooltip/tooltip.directive';
 import { MatIcon } from '@angular/material/icon';
 import { NgTemplateOutlet } from '@angular/common';
-import { InputComponent } from '@shared/components/input/input.component';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthValidatorMessages } from '@core/validators/auth.validator';
 import { FormFieldControl } from '@shared/components/form-field/form-field-control';
-import { CodeComponent } from '@shared/components/code/code.component';
 
 @Component({
   standalone: true,
@@ -22,7 +21,7 @@ import { CodeComponent } from '@shared/components/code/code.component';
   styleUrls: ['./form-field.component.scss'],
   host: {
     class: `form-field`,
-    '[class]': 'appearance()',
+    '[class]': "appearance() + ' form-field--label-' + labelPosition()",
     '[class.touched]': 'isTouched()',
     '[class.disabled]': 'field()?.disabled()',
     '[class.error]': 'hasErrors',
@@ -36,6 +35,7 @@ export class FormFieldComponent implements OnDestroy {
   #initialized: boolean = false;
 
   appearance = input<'flat' | 'outlined'>('outlined');
+  labelPosition = input<'top' | 'left'>('top');
   hideValidation = input<boolean>(false);
   showCounter = input<boolean>(false);
   isTouched = signal<boolean>(false);

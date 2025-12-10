@@ -1,0 +1,8 @@
+<ng-container *transloco="let t; prefix: 'authorization'">
+  <form-field>
+    <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="alternate_email"></mat-icon>
+    <span form-label-prefix>{{ t('fields.email.label') }}</span>
+    <input rs-input type="email" autocomplete="off" [placeholder]="t('fields.email.placeholder')" [formControl]="emailControl">
+  </form-field>
+  <button rs-button-filled class="auth-content__button" type="button" [disabled]="emailControl.invalid" (click)="onContinue()">{{ t('buttons.continue') }}</button>
+</ng-container>

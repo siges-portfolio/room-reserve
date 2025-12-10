@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, Input, viewChild } from '@angular/core';
+import { Component, forwardRef, input, Input, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
@@ -20,6 +20,9 @@ export type SwitchValues = Record<string, string>
 export class SwitchComponent implements ControlValueAccessor {
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+
+  valueType = input<'text' | 'icon'>('text');
+  labelPosition = input<'top' | 'left'>('top');
 
   value: string | null;
   activeIndex: number = 0;

@@ -19,4 +19,8 @@ $button-color-kit: (
     accent: var(--neutral-0-color),
     secondary: var(--neutral-50-color),
   ),
+  select: (
+    accent: var(--border-color),
+    secondary: var(--neutral-50-color),
+  ),
 )

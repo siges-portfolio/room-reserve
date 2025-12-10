@@ -3,11 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ToastService } from '@shared/components/toast/toast.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
 import { CompanyFormComponent } from '@modules/auth/pages/sign-up/company-form/company-form.component';
 import { UserFormComponent } from '@modules/auth/pages/sign-up/user-form/user-form.component';
-import { ConfirmEmailFormComponent } from '@modules/auth/pages/sign-up/confirm-email-form/confirm-email-form.component';
-import { SignUpFinishComponent } from '@modules/auth/pages/sign-up/sign-up-finish/sign-up-finish.component';
-import { ToastService } from '@shared/components/toast/toast.service';
+import { ConfirmEmailFormComponent } from '@modules/auth/components/confirm-email-form/confirm-email-form.component';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 enum SignUpSteps {
   USER = 'USER',
@@ -32,7 +33,8 @@ export type SignUpFormData = Record<string, { [key: string]: any }>;
     CompanyFormComponent,
     UserFormComponent,
     ConfirmEmailFormComponent,
-    SignUpFinishComponent,
+    ButtonComponent,
+    TranslocoDirective,
   ]
 })
 export class SignUpComponent implements OnDestroy {
@@ -59,7 +61,8 @@ export class SignUpComponent implements OnDestroy {
     }
   }
 
-  async onFinish(event: boolean) {
+  // TODO: remove test promise
+  async onFinish() {
     this.loading.set(true);
 
     try {
@@ -73,7 +76,7 @@ export class SignUpComponent implements OnDestroy {
       this.toastService.showToast('success', 'Account created successfully', 'check')
       console.log(this.data())
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       this.loading.set(false);
     }

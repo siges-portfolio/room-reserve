@@ -48,9 +48,7 @@ export class TooltipDirective implements OnInit {
 
   @HostListener('mouseenter')
   showTooltip(): void {
-    if (this.#overlayRef?.hasAttached() === true || this.tooltipIsFixed() || !this.tooltip()) {
-      return;
-    }
+    if (this.#overlayRef?.hasAttached() || this.tooltipIsFixed() || !this.tooltip()) return;
 
     this.attachTooltip();
   }

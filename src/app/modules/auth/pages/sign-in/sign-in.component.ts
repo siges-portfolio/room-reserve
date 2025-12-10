@@ -10,6 +10,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CheckboxComponent } from '@shared/components/checkbox/checkbox.component';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   standalone: true,
@@ -22,9 +23,9 @@ import { CheckboxComponent } from '@shared/components/checkbox/checkbox.componen
     InputComponent,
     RouterLink,
     MatIconModule,
-    CheckboxComponent
-  ],
-  styleUrls: ['./sign-in.component.scss']
+    CheckboxComponent,
+    TranslocoDirective
+  ]
 })
 export class SignInComponent {
   form: FormGroup = new FormGroup({

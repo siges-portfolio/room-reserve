@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: 'sign-up',
-    loadComponent: () => import('./pages/sign-up/sign-up.component').then((m) => m.SignUpComponent)
+    loadComponent: () => import('./pages/sign-up/sign-up.component').then((m) => m.SignUpComponent),
   },
   {
     path: 'reset-password',
@@ -19,6 +19,5 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: []
 })
 export class AuthModule { }

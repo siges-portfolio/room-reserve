@@ -5,20 +5,22 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { SignUpFormData } from '@modules/auth/pages/sign-up/sign-up.component';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   standalone: true,
   selector: 'company-form',
   templateUrl: './company-form.component.html',
   host: {
-    class: 'sign-up__content',
+    class: 'auth-content__content',
   },
   imports: [
     FormFieldComponent,
     InputComponent,
     MatIconModule,
     ReactiveFormsModule,
-    ButtonComponent
+    ButtonComponent,
+    TranslocoDirective
   ]
 })
 export class CompanyFormComponent {

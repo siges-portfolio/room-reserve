@@ -1,0 +1,23 @@
+.rs-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    background-color: color-mix(in srgb, var(--border-color) 90%, black);
+  }
+
+  mat-icon {
+    margin-left: auto;
+    color: var(--primary-color);
+  }
+}

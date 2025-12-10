@@ -23,9 +23,17 @@
     }
   </nav>
   <div class="sidebar__footer">
-    <button rs-button color="warning" size="sm" class="sidebar__logout-button">
-      <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
-      <span>Logout</span>
-    </button>
+    <div class="sidebar__language">
+      <language-switcher></language-switcher>
+    </div>
+    <div class="sidebar__theme">
+      <theme-switcher></theme-switcher>
+    </div>
+    <div class="sidebar__logout">
+      <button rs-button color="warning" class="sidebar__logout-button">
+        <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
   </div>
 </aside>

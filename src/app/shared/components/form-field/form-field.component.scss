@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 8px;
 
+  &--label-left {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   &.flat {
     .form-field {
       &__inner {

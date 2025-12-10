@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, input, OnInit, ViewEncapsulation } from '@angular/core';
 
-type RSButtonColor = 'primary' | 'warning' | 'light' | 'gray' | 'dark';
+type RSButtonColor = 'primary' | 'warning' | 'light' | 'gray' | 'dark' | 'select';
 type RSButtonSize = 'sm' | 'md' | 'lg' | 'xs';
 
 @Component({

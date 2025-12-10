@@ -1,18 +1,28 @@
-<ng-container [formGroup]="form">
+<ng-container [formGroup]="form" *transloco="let t; prefix: 'authorization'">
   <form-field>
     <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="account_balance"></mat-icon>
-    <span form-label-prefix>Company name</span>
-    <input rs-input type="text" autocomplete="off" placeholder="Enter company name" formControlName="name">
+    <span form-label-prefix>{{ t('fields.company-name.label') }}</span>
+    <input rs-input type="text" autocomplete="off" [placeholder]="t('fields.company-name.placeholder')" formControlName="name">
   </form-field>
   <form-field>
     <mat-icon form-prefix autofocus class="material-symbols-outlined icon icon--sm" fontIcon="description"></mat-icon>
-    <span form-label-prefix>Company description</span>
-    <textarea rs-input rows="3" autocomplete="off" placeholder="Enter company description" formControlName="description"></textarea>
+    <span form-label-prefix>{{ t('fields.company-description.label') }}</span>
+    <textarea rs-input rows="3" autocomplete="off" [placeholder]="t('fields.company-description.placeholder')" formControlName="description"></textarea>
   </form-field>
-  <div class="sign-up__buttons">
-    <button class="sign-up__button sign-up__button--back" rs-button-outlined rs-button-icon (click)="onAction('back')">
-      <mat-icon class="material-symbols-outlined" fontIcon="arrow_back"></mat-icon>
-    </button>
-    <button class="sign-up__button sign-up__button--submit" type="button" rs-button-filled [loading]="loading()" [disabled]="form.invalid" (click)="onAction('submit')">Continue</button>
+  <div class="auth-content__buttons">
+    <button
+      rs-button-outlined
+      rs-button-icon
+      class="auth-content__button auth-content__button--back"
+      (click)="onAction('back')"
+    ><mat-icon class="material-symbols-outlined" fontIcon="arrow_back"></mat-icon></button>
+    <button
+      rs-button-filled
+      type="button"
+      class="auth-content__button auth-content__button--submit"
+      [loading]="loading()"
+      [disabled]="form.invalid"
+      (click)="onAction('submit')"
+    >{{ t('buttons.continue') }}</button>
   </div>
 </ng-container>

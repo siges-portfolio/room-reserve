@@ -1,0 +1,95 @@
+{
+  "title": "Welcome to RoomReserve",
+  "subtitle": "Streamline your meeting room bookings",
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "name@company.com"
+    },
+    "password": {
+      "label": "Password",
+      "forgot": "Forgot password?"
+    },
+    "new-password": {
+      "label": "New password"
+    },
+    "confirm-password": {
+      "label": "Confirm password"
+    },
+    "code": {
+      "label": "Enter code"
+    },
+    "company-name": {
+      "label": "Company name",
+      "placeholder": "Enter company name"
+    },
+    "company-description": {
+      "label": "Company description",
+      "placeholder": "Enter company description"
+    }
+  },
+  "buttons": {
+    "continue": "Continue",
+    "create-account": "Create account",
+    "change-password": "Change password",
+    "to-profile": "Go to Profile",
+    "to-dashboard": "Go to Dashboard",
+    "resend-code": "Resend code",
+    "log-in": "Log in"
+  },
+  "sign-in": {
+    "title": "Authorization",
+    "subtitle": "Login to your account to continue.",
+    "remember-me": "Remember me",
+    "button": "Sign in",
+    "dont-have-account": "Dont have an account?",
+    "register": "Register"
+  },
+  "sign-up": {
+    "user-step": {
+      "title": "User registration",
+      "subtitle": "Create a new user to continue.",
+      "select-role": "Select role:",
+      "customer": "Customer",
+      "company-owner": "Company Owner",
+      "create-account": "Create account"
+    },
+    "company-step": {
+      "title": "Company registration",
+      "subtitle": "Create a new company to continue."
+    },
+    "finish-step": {
+      "title": "Account created successfully!",
+      "subtitle": "Your account has been successfully created and confirmed.",
+      "what-next": "What next?",
+      "fill-profile": "Fill out your profile to receive personalized recommendations",
+      "explore-features": "Explore the features of your account",
+      "start-booking": "Start booking rooms right now"
+    },
+    "have-account": "Already have an account?",
+    "log-in": "Log In"
+  },
+  "reset-password": {
+    "email-step": {
+      "title": "Forgot password?",
+      "subtitle": "Enter your email address to recover your password."
+    },
+    "password-step": {
+      "title": "Change password",
+      "subtitle": "To continue, enter a new password."
+    },
+    "finish-step": {
+      "title": "Password successfully changed!",
+      "log-in": "You can now log in using your new password.",
+      "support": "If you did not request the change, please contact customer support."
+    },
+    "remember-password": "Remembered your password?",
+    "log-in": "Log In"
+  },
+  "confirm": {
+    "title": "Confirm email",
+    "subtitle": "We have sent a confirmation code to <span>{{ email }}</span>",
+    "check-spam": "Didn't receive the email? Check your spam folder or click the button below",
+    "timer": "<mark> in {{ timer }} seconds</mark>"
+  }
+}

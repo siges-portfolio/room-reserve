@@ -1,0 +1,22 @@
+<div class="rs-select">
+  <button
+    #trigger
+    rs-button-filled
+    size="md"
+    color="select"
+    type="button"
+    class="rs-select__button"
+    [ngClass]="{ active: opened() }"
+    (click)="opened() ? closeSelect() : openSelect($event)"
+  >
+    <span>{{ selectedOption()?.label ? selectedOption()?.label : label()  }}</span>
+    <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="arrow_drop_down"></mat-icon>
+  </button>
+  <ng-content></ng-content>
+</div>
+
+<ng-template #optionsTemplate>
+  <div class="rs-select__options" [ngClass]="{ opened: opened() }">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

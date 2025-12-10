@@ -52,7 +52,14 @@
     margin-top: auto;
     padding: rem(24px);
 
-    border-top: 1px solid var(--border-color);
+    & > * {
+      padding: rem(16px) 0;
+      border-top: 1px solid var(--border-color);
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
   }
 
   &__logout-button {

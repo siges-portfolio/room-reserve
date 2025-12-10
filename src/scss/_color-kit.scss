@@ -1,36 +1,30 @@
 $themes: (
   'dark': (
     primary: #3B82F6,
-
     neutral-100: #F8FAFC,
     neutral-50: #94A3B8,
     neutral-0: #0F172A,
-
     background: #0F1729,
     sidebar: #18181B,
     section: #0F1729,
     border: #1E293B,
     navigation-active: #27272A,
-
     error: #ff5959,
     warning: #e8c742,
     success: #09dc58
   ),
   'light': (
     primary: #3B82F6,
-
-    neutral-100: #F8FAFC,
-    neutral-50: #94A3B8,
-    neutral-0: #0F172A,
-
-    background: #0F1729,
-    sidebar: #18181B,
-    section: #0F1729,
-    border: #1E293B,
-    navigation-active: #27272A,
-
-    error: #ff5959,
-    warning: #e8c742,
-    success: #09dc58
+    neutral-100: #0F172A,
+    neutral-50: #64748B,
+    neutral-0: #F8FAFC,
+    background: #FFFFFF,
+    sidebar: #F1F5F9,
+    section: #FFFFFF,
+    border: #E2E8F0,
+    navigation-active: #e5eaee,
+    error: #DC2626,
+    warning: #D97706,
+    success: #059669
   )
 )

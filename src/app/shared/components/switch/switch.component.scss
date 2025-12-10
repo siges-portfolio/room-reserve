@@ -10,6 +10,12 @@
   flex-direction: column;
   gap: 8px;
 
+  &--label-left {
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+
   &__label {
     font-size: 14px;
     font-weight: 500;
