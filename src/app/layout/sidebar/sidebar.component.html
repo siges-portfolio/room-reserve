@@ -29,11 +29,21 @@
     <div class="sidebar__theme">
       <theme-switcher></theme-switcher>
     </div>
-    <div class="sidebar__logout">
-      <button rs-button color="warning" class="sidebar__logout-button">
-        <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
-        <span>{{ t('logout') }}</span>
-      </button>
+    <div class="sidebar__user-wrapper">
+      <div class="sidebar__user">
+        <div class="sidebar__user-avatar">
+          <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="person"></mat-icon>
+        </div>
+        <div class="sidebar__user-name">Username</div>
+      </div>
+      <div class="sidebar__user-actions">
+        <button rs-button rs-button-icon color="gray">
+          <mat-icon class="material-symbols-outlined" fontIcon="settings"></mat-icon>
+        </button>
+        <button rs-button rs-button-icon color="warning">
+          <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </aside>

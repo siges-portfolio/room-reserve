@@ -62,9 +62,43 @@
     }
   }
 
-  &__logout-button {
-    width: 100%;
-    justify-content: flex-start;
+  &__user-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16px);
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__user-avatar {
+    min-width: 40px;
+    aspect-ratio: 1/1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--neutral-30-color);
+    border-radius: 50%;
+
+    color: var(--neutral-100-color);
+  }
+
+  &__user-name {
+    font-family: var(--font-title);
+    font-size: 14px;
+    color: var(--neutral-100-color);
+  }
+
+  &__user-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 }
 
@@ -93,7 +127,7 @@
 
   &__group-title {
     font-size: 12px;
-    font-family: 'Jakarta', sans-serif;
+    font-family: var(--font-title);
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;

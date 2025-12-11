@@ -1,10 +1,6 @@
 @use "color-kit" as *;
 @use "_mixins/font-face" as *;
 
-// Variables
-$header-height: 56px;
-$sticky-top-offset: calc($header-height + 24px);
-
 // Font imports
 @include font-face('Manrope', normal, 800, '/assets/fonts/Manrope/Manrope-ExtraBold.woff2');
 @include font-face('Manrope', normal, 700, '/assets/fonts/Manrope/Manrope-Bold.woff2');
@@ -44,4 +40,7 @@ $sticky-top-offset: calc($header-height + 24px);
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --font-base: 'Manrope', sans-serif;
+  --font-title: 'Jakarta', sans-serif;
 }
