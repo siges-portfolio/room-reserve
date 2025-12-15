@@ -40,7 +40,7 @@
         <button rs-button rs-button-icon color="gray">
           <mat-icon class="material-symbols-outlined" fontIcon="settings"></mat-icon>
         </button>
-        <button rs-button rs-button-icon color="warning">
+        <button rs-button rs-button-icon color="warning" [loading]="logoutLoading()" (click)="logout()">
           <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
         </button>
       </div>

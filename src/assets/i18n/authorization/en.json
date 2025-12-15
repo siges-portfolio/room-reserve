@@ -34,7 +34,7 @@
     "change-password": "Change password",
     "to-profile": "Go to Profile",
     "to-dashboard": "Go to Dashboard",
-    "resend-code": "Resend code",
+    "resend-code": "Resend link",
     "log-in": "Log in"
   },
   "sign-in": {
@@ -61,10 +61,7 @@
     "finish-step": {
       "title": "Account created successfully!",
       "subtitle": "Your account has been successfully created and confirmed.",
-      "what-next": "What next?",
-      "fill-profile": "Fill out your profile to receive personalized recommendations",
-      "explore-features": "Explore the features of your account",
-      "start-booking": "Start booking rooms right now"
+      "text": "Your account has been successfully created. To continue, log in to your account using the link below."
     },
     "have-account": "Already have an account?",
     "log-in": "Log In"
@@ -88,8 +85,12 @@
   },
   "confirm": {
     "title": "Confirm email",
-    "subtitle": "We have sent a confirmation code to <span>{{ email }}</span>",
+    "subtitle": "We have sent a confirmation link to <span>{{ email }}</span>",
     "check-spam": "Didn't receive the email? Check your spam folder or click the button below",
     "timer": "<mark> in {{ timer }} seconds</mark>"
+  },
+  "errors": {
+    "invalid-credentials": "Incorrect login or password",
+    "unexpected-error": "Unexpected error"
   }
 }

@@ -1,8 +1,4 @@
 <ng-container *transloco="let t; prefix: 'authorization'">
-  <form-field [hideValidation]="true" appearance="flat">
-    <span form-label-prefix>{{ t('fields.code.label') }}:</span>
-    <code-input [formControl]="codeControl"></code-input>
-  </form-field>
   <div class="confirm-email__resend">
     <span>{{ t('confirm.check-spam') }}</span>
     @if (!resendActive()) {
@@ -14,18 +10,10 @@
       rs-button-outlined
       type="button"
       class="auth-content__button auth-content__button--submit"
+      [loading]="resendLoading()"
       [disabled]="!resendActive()"
-      (click)="resendCode()"
+      (click)="resendConfirmation()"
     >{{ t('buttons.resend-code') }}
-    </button>
-    <button
-      rs-button-filled
-      type="button"
-      class="auth-content__button auth-content__button--submit"
-      [loading]="loading()"
-      [disabled]="codeControl.invalid"
-      (click)="onSubmit()"
-    >{{ type() === 'reset' ? t('buttons.continue') : t('buttons.create-account') }}
     </button>
   </div>
 </ng-container>

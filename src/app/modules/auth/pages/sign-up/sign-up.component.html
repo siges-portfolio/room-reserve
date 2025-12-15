@@ -11,7 +11,7 @@
       }
       @case (steps.CONFIRM_EMAIL) {
         <h6 class="auth-content__title">{{ t('confirm.title') }}</h6>
-        <div class="auth-content__subtitle" [innerHTML]="t('confirm.subtitle', { email: data()['user']['email'] })"></div>
+        <div class="auth-content__subtitle" [innerHTML]="t('confirm.subtitle', { email: email() })"></div>
       }
       @case (steps.FINISH) {
         <h6 class="auth-content__title">{{ t('sign-up.finish-step.title') }}</h6>
@@ -38,21 +38,18 @@
         ></company-form>
       }
       @case (steps.CONFIRM_EMAIL) {
-        <confirm-email-form (submit)="onFinish()" [loading]="loading()"></confirm-email-form>
+        <confirm-email-form
+          type="sign-up"
+          [email]="email()"
+          (submit)="changeStep(steps.FINISH)"
+          [loading]="loading()"
+        ></confirm-email-form>
       }
       @case (steps.FINISH) {
         <div class="auth-content__content">
-          <div class="auth-content__finish">
-            <h6>{{ t('sign-up.finish-step.what-next') }}</h6>
-            <ul>
-              <li>{{ t('sign-up.finish-step.fill-profile') }}</li>
-              <li>{{ t('sign-up.finish-step.explore-features') }}</li>
-              <li>{{ t('sign-up.finish-step.start-booking') }}</li>
-            </ul>
-          </div>
+          <div class="auth-content__finish">{{ t('sign-up.finish-step.text') }}</div>
           <div class="auth-content__buttons auth-content__buttons--column">
-            <a routerLink="/authorization" class="sign-up__button auth-content__button--submit" type="button" rs-button-outlined>{{ t('buttons.to-profile') }}</a>
-            <a routerLink="/authorization" class="auth-content__button auth-content__button--submit" type="button" rs-button-filled>{{ t('buttons.to-dashboard') }}</a>
+            <a routerLink="/authorization" class="sign-up__button auth-content__button--submit" type="button" rs-button-filled>{{ t('buttons.log-in') }}</a>
           </div>
         </div>
       }

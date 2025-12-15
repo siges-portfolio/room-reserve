@@ -16,7 +16,14 @@
       <input rs-input type="password" autocomplete="off" placeholder="***********" formControlName="password">
     </form-field>
     <rs-checkbox formControlName="remember">{{ t('sign-in.remember-me') }}</rs-checkbox>
-    <button class="auth-content__button" type="button" rs-button-filled [disabled]="form.invalid">{{ t('sign-in.button') }}</button>
+    <button
+      rs-button-filled
+      type="button"
+      class="auth-content__button"
+      [disabled]="form.invalid"
+      [loading]="loading()"
+      (click)="submit()"
+    >{{ t('sign-in.button') }}</button>
   </div>
   <div class="auth-content__footer">
     <span>{{ t('sign-in.dont-have-account') }} <a routerLink="/authorization/sign-up">{{ t('sign-in.register') }}</a></span>

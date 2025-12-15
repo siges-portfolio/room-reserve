@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '@shared/components/toast/toast.service';
@@ -7,12 +7,14 @@ import { PasswordFormComponent } from '@modules/auth/pages/reset-password/passwo
 import { ConfirmEmailFormComponent } from '@modules/auth/components/confirm-email-form/confirm-email-form.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AuthorizationService } from '@core/services/authorization';
+import { Subject, takeUntil } from 'rxjs';
 
 export enum ResetPasswordSteps {
   EMAIL = 'email',
-  CONFIRM = 'confirm',
+  CONFIRM_EMAIL = 'confirm',
   PASSWORD = 'password',
-  FINISH = 'finish'
+  FINISH = 'finish',
 }
 
 @Component({
@@ -26,39 +28,76 @@ export enum ResetPasswordSteps {
     ConfirmEmailFormComponent,
     PasswordFormComponent,
     ButtonComponent,
-    TranslocoDirective
-  ]
+    TranslocoDirective,
+  ],
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
+  authService = inject(AuthorizationService);
   toastService = inject(ToastService);
   steps = ResetPasswordSteps;
 
+  destroy$: Subject<void> = new Subject();
+
   loading = signal<boolean>(false);
-  email = signal<string | null>(null);
+  email = signal<string>('');
   currentStep = signal<ResetPasswordSteps>(this.steps.EMAIL);
 
+  session: { accessToken: string; refreshToken: string };
+
+  async ngOnInit() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    const type = params.get('type');
+
+    if (accessToken && refreshToken && type === 'recovery') {
+      this.session = { accessToken, refreshToken };
+
+      this.currentStep.set(ResetPasswordSteps.PASSWORD);
+    }
+  }
+
   changeStep(event: any, step: ResetPasswordSteps) {
-    if (step == ResetPasswordSteps.CONFIRM) this.email.set(event);
+    if (step === ResetPasswordSteps.CONFIRM_EMAIL) {
+      this.email.set(event);
+      this.authService.resetPassword(this.email()).pipe(takeUntil(this.destroy$)).subscribe();
+    }
+
     this.currentStep.set(step);
   }
 
-  // TODO: remove test promise
-  async onFinish() {
+  onFinish(password: string) {
     this.loading.set(true);
 
-    try {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve('')
-        }, 2000)
-      })
+    this.authService
+      .updatePassword(password, this.session)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.currentStep.set(this.steps.FINISH);
+          this.toastService.showToast('success', 'Password changed successfully', 'check');
+          this.loading.set(false);
+        },
+        error: (error) => {
+          switch (error.code) {
+            case 'same_password':
+              this.toastService.showToast(
+                'error',
+                'The new password must be different from the previous one',
+                'close',
+              );
+              break;
+            default:
+              this.toastService.showToast('error', 'Unexpected error', 'check');
+          }
+          this.loading.set(false);
+        },
+      });
+  }
 
-      this.currentStep.set(this.steps.FINISH);
-      this.toastService.showToast('success', 'Password changed successfully', 'check')
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.loading.set(false);
-    }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

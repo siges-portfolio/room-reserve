@@ -1,0 +1,187 @@
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, from, map, switchMap } from 'rxjs';
+import { environment } from '@environment';
+import { AuthState, User } from '@core/models/user';
+import { AuthResponse, AuthResponsePassword } from '@supabase/supabase-js';
+import { SupabaseService } from '@core/services/supabase';
+
+const INITIAL_AUTH_STATE: AuthState = {
+  user: null,
+  error: null,
+  session: null,
+  isLoading: true,
+  isRecovery: false,
+};
+
+@Injectable({ providedIn: 'root' })
+export class AuthorizationService {
+  supabase = inject(SupabaseService);
+
+  #authState = new BehaviorSubject(INITIAL_AUTH_STATE);
+  authState$ = this.#authState.asObservable();
+
+  constructor() {
+    this.#initAuthStateChange();
+  }
+
+  #initAuthStateChange() {
+    this.supabase.client.auth.onAuthStateChange((event, session) => {
+      const user = session?.user;
+
+      switch (event) {
+        case 'INITIAL_SESSION':
+          if (user) {
+            this.updateState({
+              user: this.mapUserData({ ...user, email: user.email! }),
+              session: session,
+              isLoading: false,
+              error: null,
+            });
+          } else {
+            this.updateState({
+              isLoading: false,
+            });
+          }
+          break;
+        case 'PASSWORD_RECOVERY':
+          this.updateState({ isRecovery: true });
+          return;
+        case 'SIGNED_IN':
+          if (user) {
+            this.updateState({
+              user: this.mapUserData({ ...user, email: user.email! }),
+              session: session,
+              isLoading: false,
+              error: null,
+            });
+          }
+          break;
+        case 'SIGNED_OUT':
+          this.updateState({ ...INITIAL_AUTH_STATE, isLoading: false });
+          break;
+        case 'TOKEN_REFRESHED':
+          break;
+        case 'USER_UPDATED':
+          break;
+      }
+    });
+  }
+
+  get session() {
+    return from(this.supabase.client.auth.getSession()).pipe(
+      map((response) => response.data.session),
+    );
+  }
+
+  signIn(email: string, password: string) {
+    this.updateState({ isLoading: true });
+
+    return from(this.supabase.client.auth.signInWithPassword({ email, password })).pipe(
+      map((response) => {
+        if (response.error) throw response.error;
+      }),
+      catchError((error: any) => {
+        this.updateState({
+          isLoading: false,
+          error: error.message,
+        });
+
+        throw error;
+      }),
+    );
+  }
+
+  signUp(email: string, password: string) {
+    return from(
+      this.supabase.client.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          emailRedirectTo: `${environment.BASE_URL}/authorization/sign-up`,
+        },
+      }),
+    ).pipe(
+      catchError((error) => {
+        this.updateState({
+          isLoading: false,
+          error: error.message,
+        });
+
+        throw error;
+      }),
+    );
+  }
+
+  resendConfirmation(email: string) {
+    return from(
+      this.supabase.client.auth.resend({
+        type: 'signup',
+        email: email,
+        options: {
+          emailRedirectTo: `${environment.BASE_URL}/authorization/sign-up`,
+        },
+      }),
+    ).pipe(
+      map((response: AuthResponsePassword) => {
+        if (response.error) throw response.error;
+      }),
+    );
+  }
+
+  resetPassword(email: string) {
+    return from(
+      this.supabase.client.auth.resetPasswordForEmail(email, {
+        redirectTo: `${environment.BASE_URL}/authorization/reset-password`,
+      }),
+    ).pipe(
+      map((response) => {
+        if (response.error) throw response.error;
+      }),
+    );
+  }
+
+  updatePassword(password: string, sessionData: { accessToken: string; refreshToken: string }) {
+    const { accessToken: access_token, refreshToken: refresh_token } = sessionData;
+
+    // TODO: On error recreate session
+    return from(this.supabase.client.auth.setSession({ access_token, refresh_token })).pipe(
+      map((response: AuthResponse) => response.data.session),
+      switchMap((session) => {
+        return from(this.supabase.client.auth.updateUser({ password })).pipe(
+          map((response) => {
+            if (response.error) {
+              // this.supabase.client.auth.signOut();
+              throw response.error;
+            }
+
+            this.updateState({ isRecovery: false });
+          })
+        );
+      }),
+    );
+  }
+
+  logout() {
+    return from(this.supabase.client.auth.signOut()).pipe(
+      map((response) => {
+        if (response.error) throw response.error;
+      }),
+    );
+  }
+
+  mapUserData(user: User) {
+    return {
+      id: user.id,
+      email: user.email!,
+      user_metadata: user.user_metadata,
+      created_at: user.created_at,
+    };
+  }
+
+  updateState(newState: Partial<AuthState>) {
+    this.#authState.next({
+      ...this.#authState.value,
+      ...newState,
+    });
+  }
+}

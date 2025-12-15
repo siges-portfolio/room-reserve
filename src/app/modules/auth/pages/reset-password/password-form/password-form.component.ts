@@ -31,16 +31,20 @@ import { TranslocoDirective } from '@jsverse/transloco';
   }
 })
 export class PasswordFormComponent {
-  submit = output<void>();
+  submit = output<string>();
 
   loading = input<boolean>(false);
 
   form = new FormGroup({
-    password: new FormControl('', { validators: [...DEFAULT_PASSWORD_VALIDATIONS, uppercase(), lowercase(), digit(), symbol()] }),
+    password: new FormControl('', { nonNullable: true, validators: [...DEFAULT_PASSWORD_VALIDATIONS, uppercase(), lowercase(), digit(), symbol()] }),
     confirmPassword: new FormControl('', { validators: Validators.required }),
   }, { validators: [confirmPasswordValidation()] });
 
+  get password() {
+    return this.form.controls['password'].value;
+  }
+
   onSubmit() {
-    this.submit.emit()
+    this.submit.emit(this.password)
   }
 }
