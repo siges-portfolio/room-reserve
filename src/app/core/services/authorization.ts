@@ -13,6 +13,8 @@ const INITIAL_AUTH_STATE: AuthState = {
   isRecovery: false,
 };
 
+const STORED_RECOVERY_KEY = 'auth:isRecovery';
+
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
   supabase = inject(SupabaseService);
@@ -26,6 +28,7 @@ export class AuthorizationService {
 
   #initAuthStateChange() {
     this.supabase.client.auth.onAuthStateChange((event, session) => {
+      const storedIsRecovery = sessionStorage.getItem(STORED_RECOVERY_KEY);
       const user = session?.user;
 
       switch (event) {
@@ -35,6 +38,7 @@ export class AuthorizationService {
               user: this.mapUserData({ ...user, email: user.email! }),
               session: session,
               isLoading: false,
+              isRecovery: storedIsRecovery === 'true',
               error: null,
             });
           } else {
@@ -44,6 +48,7 @@ export class AuthorizationService {
           }
           break;
         case 'PASSWORD_RECOVERY':
+          sessionStorage.setItem(STORED_RECOVERY_KEY, 'true');
           this.updateState({ isRecovery: true });
           return;
         case 'SIGNED_IN':
@@ -52,6 +57,7 @@ export class AuthorizationService {
               user: this.mapUserData({ ...user, email: user.email! }),
               session: session,
               isLoading: false,
+              isRecovery: storedIsRecovery === 'true',
               error: null,
             });
           }
@@ -79,6 +85,9 @@ export class AuthorizationService {
     return from(this.supabase.client.auth.signInWithPassword({ email, password })).pipe(
       map((response) => {
         if (response.error) throw response.error;
+
+        sessionStorage.removeItem(STORED_RECOVERY_KEY);
+        this.updateState({ isRecovery: false })
       }),
       catchError((error: any) => {
         this.updateState({
@@ -135,28 +144,18 @@ export class AuthorizationService {
       }),
     ).pipe(
       map((response) => {
-        if (response.error) throw response.error;
+        if (response.error) throw response.error;;
       }),
     );
   }
 
-  updatePassword(password: string, sessionData: { accessToken: string; refreshToken: string }) {
-    const { accessToken: access_token, refreshToken: refresh_token } = sessionData;
+  updatePassword(password: string) {
+    return from(this.supabase.client.auth.updateUser({ password })).pipe(
+      map((response) => {
+        if (response.error) throw response.error;
 
-    // TODO: On error recreate session
-    return from(this.supabase.client.auth.setSession({ access_token, refresh_token })).pipe(
-      map((response: AuthResponse) => response.data.session),
-      switchMap((session) => {
-        return from(this.supabase.client.auth.updateUser({ password })).pipe(
-          map((response) => {
-            if (response.error) {
-              // this.supabase.client.auth.signOut();
-              throw response.error;
-            }
-
-            this.updateState({ isRecovery: false });
-          })
-        );
+        sessionStorage.removeItem(STORED_RECOVERY_KEY);
+        this.updateState({ isRecovery: false });
       }),
     );
   }
@@ -165,6 +164,9 @@ export class AuthorizationService {
     return from(this.supabase.client.auth.signOut()).pipe(
       map((response) => {
         if (response.error) throw response.error;
+
+        sessionStorage.removeItem(STORED_RECOVERY_KEY);
+        this.updateState({ isRecovery: false });
       }),
     );
   }

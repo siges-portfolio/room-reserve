@@ -42,20 +42,12 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   email = signal<string>('');
   currentStep = signal<ResetPasswordSteps>(this.steps.EMAIL);
 
-  session: { accessToken: string; refreshToken: string };
-
-  async ngOnInit() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-    const type = params.get('type');
-
-    if (accessToken && refreshToken && type === 'recovery') {
-      this.session = { accessToken, refreshToken };
-
-      this.currentStep.set(ResetPasswordSteps.PASSWORD);
-    }
+  ngOnInit() {
+    this.authService.authState$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => {
+        if (state.isRecovery) this.currentStep.set(ResetPasswordSteps.PASSWORD);
+      }
+    })
   }
 
   changeStep(event: any, step: ResetPasswordSteps) {
@@ -71,7 +63,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.loading.set(true);
 
     this.authService
-      .updatePassword(password, this.session)
+      .updatePassword(password)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {

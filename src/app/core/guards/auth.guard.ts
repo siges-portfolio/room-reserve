@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
     return this.authService.authState$.pipe(
       filter((state) => !state.isLoading),
       map((state) => {
-        console.log('[Auth Guard] State: ', state);
         if (state.isRecovery) {
           void this.router.navigate(['/authorization/reset-password']);
           return false;

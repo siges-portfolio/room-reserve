@@ -19,7 +19,6 @@ export class GuestGuard implements CanActivate {
     return this.authService.authState$.pipe(
       filter((state) => !state.isLoading),
       map((state) => {
-        console.log('[Guest Guard] State: ', state);
         if (state.session && !state.isRecovery) {
           void this.router.navigate(['/dashboard']);
           return false;

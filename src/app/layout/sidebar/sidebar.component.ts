@@ -88,7 +88,7 @@ export class SidebarComponent {
       },
       error: (error) => {
         this.logoutLoading.set(false);
-        console.log(error);
+        console.error(error);
       }
     });
   }
