@@ -155,7 +155,7 @@ export class AuthorizationService {
   }
 
   updateUser(data: Partial<UserAttributes>) {
-    return from(this.supabase.client.auth.updateUser({ data })).pipe(
+    return from(this.supabase.client.auth.updateUser({ ...data })).pipe(
       map((response) => {
         if (response.error) throw response.error;
 

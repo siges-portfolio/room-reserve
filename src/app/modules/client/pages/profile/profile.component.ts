@@ -75,18 +75,21 @@ export class ProfileComponent implements OnDestroy {
     const data = this.form.value;
     this.loading.set(true);
 
-    this.authService.updateUser({ phone: data.phone, data }).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (data) => {
-        this.toastService.showToast('success', 'Profile updated successfully.', 'check');
-      },
-      error: (error) => {
-        this.toastService.showToast('error', 'Unexpected error.', 'close');
-        console.error(error);
-      },
-      complete: () => {
-        this.loading.set(false)
-      }
-    });
+    this.authService
+      .updateUser({ data: { phone: data.phone, data } })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.toastService.showToast('success', 'Profile updated successfully.', 'check');
+        },
+        error: (error) => {
+          this.toastService.showToast('error', 'Unexpected error.', 'close');
+          console.error(error);
+        },
+        complete: () => {
+          this.loading.set(false);
+        },
+      });
   }
 
   ngOnDestroy() {
