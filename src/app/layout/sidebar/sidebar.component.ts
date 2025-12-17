@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { SidebarNavigation } from '@core/models/navigation';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -8,6 +8,7 @@ import { LanguageSwitcherComponent } from '@layout/sidebar/language-switcher/lan
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AuthorizationService } from '@core/services/authorization';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { pipe, Subject, takeUntil } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -24,11 +25,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
   ],
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
   authService = inject(AuthorizationService);
   router = inject(Router);
 
+  destroy$: Subject<void> = new Subject<void>();
+
   userState$ = toSignal(this.authService.authState$);
+  logoutLoading = signal<boolean>(false);
 
   user = computed(() => this.userState$()?.user);
   userDisplayName = computed(() => {
@@ -40,8 +44,6 @@ export class SidebarComponent {
       return this.user()?.email;
     }
   });
-
-  logoutLoading = signal<boolean>(false);
 
   navigation: SidebarNavigation = [
     {
@@ -95,7 +97,7 @@ export class SidebarComponent {
   logout() {
     this.logoutLoading.set(true);
 
-    this.authService.logout().subscribe({
+    this.authService.logout().pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         void this.router.navigate(['/authorization']);
         this.logoutLoading.set(false);
@@ -105,5 +107,10 @@ export class SidebarComponent {
         console.error(error);
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

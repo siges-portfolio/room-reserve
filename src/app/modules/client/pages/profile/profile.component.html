@@ -2,12 +2,6 @@
   <section-header class="profile__header">
     <span header-title>Profile</span>
     <span header-subtitle>Edit profile and booking history.</span>
-    <ng-container header-actions>
-      <button rs-button color="warning">
-        <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
-        <span>Logout</span>
-      </button>
-    </ng-container>
   </section-header>
   <div class="user profile__block profile__user">
     <div class="profile__block-header">
@@ -99,7 +93,7 @@
         rs-button-filled
         class="profile__block-action"
         [disabled]="form.invalid"
-        [loading]="loading()"
+        [loading]="saveLoading()"
         (click)="saveChanges()"
       >
         <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="save"></mat-icon>

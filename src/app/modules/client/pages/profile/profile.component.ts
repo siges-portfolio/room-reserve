@@ -11,6 +11,7 @@ import { InputComponent } from '@shared/components/input/input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastService } from '@shared/components/toast/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -30,12 +31,15 @@ import { ToastService } from '@shared/components/toast/toast.service';
 })
 export class ProfileComponent implements OnDestroy {
   authService = inject(AuthorizationService);
-  toastService = inject(ToastService)
-  destroy$: Subject<void> = new Subject<void>;
+  toastService = inject(ToastService);
+  router = inject(Router);
+
+  destroy$: Subject<void> = new Subject<void>();
 
   userState$ = toSignal(this.authService.authState$);
 
-  loading = signal<boolean>(false);
+  saveLoading = signal<boolean>(false);
+  logoutLoading = signal<boolean>(false);
   user = computed(() => this.userState$()?.user);
   userDisplayName = computed(() => {
     const userMetadata = this.user()?.user_metadata.data;
@@ -73,7 +77,7 @@ export class ProfileComponent implements OnDestroy {
 
   saveChanges() {
     const data = this.form.value;
-    this.loading.set(true);
+    this.saveLoading.set(true);
 
     this.authService
       .updateUser({ data: { phone: data.phone, data } })
@@ -87,7 +91,7 @@ export class ProfileComponent implements OnDestroy {
           console.error(error);
         },
         complete: () => {
-          this.loading.set(false);
+          this.saveLoading.set(false);
         },
       });
   }
