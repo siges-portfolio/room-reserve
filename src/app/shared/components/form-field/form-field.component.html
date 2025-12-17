@@ -16,12 +16,12 @@
   <div class="form-field__messages-container">
     @if (messages()) {
       <span class="form-field__messages-notification form-field__messages-notification--error" [tooltip]="messages() ? messagesTooltip : null">
-          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="question_mark"></mat-icon>
-        </span>
-    } @else if (isTouched()) {
+        <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="question_mark"></mat-icon>
+      </span>
+    } @else if (isTouched() && controlValue()) {
       <span class="form-field__messages-notification form-field__messages-notification--success">
-          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="check"></mat-icon>
-        </span>
+        <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="check"></mat-icon>
+      </span>
     }
   </div>
   <div class="form-field__suffix">

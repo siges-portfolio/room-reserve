@@ -5,7 +5,7 @@
 
   display: grid;
   grid-template-columns: repeat(var(--symbols-count), 1fr);
-  grid-gap: 8px;
+  grid-gap: calc(var(--spacing-unit) * 2);
 
   &__item {
     aspect-ratio: 1/1;

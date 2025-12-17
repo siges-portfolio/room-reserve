@@ -1,9 +1,9 @@
 .rs-option {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--spacing-unit) * 2);
 
-  padding: 6px 10px;
+  padding: calc(calc(var(--spacing-unit) * 1.5)) calc(var(--spacing-unit) * 2.5);
   border-radius: var(--radius-md);
 
   font-size: 14px;

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { SidebarNavigation } from '@core/models/navigation';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -7,6 +7,7 @@ import { ThemeSwitcherComponent } from '@layout/sidebar/theme-switcher/theme-swi
 import { LanguageSwitcherComponent } from '@layout/sidebar/language-switcher/language-switcher.component';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AuthorizationService } from '@core/services/authorization';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
@@ -26,6 +27,19 @@ import { AuthorizationService } from '@core/services/authorization';
 export class SidebarComponent {
   authService = inject(AuthorizationService);
   router = inject(Router);
+
+  userState$ = toSignal(this.authService.authState$);
+
+  user = computed(() => this.userState$()?.user);
+  userDisplayName = computed(() => {
+    const userMetadata = this.user()?.user_metadata.data;
+
+    if (userMetadata && (userMetadata['firstName'].length || userMetadata['lastName'].length)) {
+      return `${userMetadata['firstName']} ${userMetadata['lastName']}`;
+    } else {
+      return this.user()?.email;
+    }
+  });
 
   logoutLoading = signal<boolean>(false);
 
@@ -89,7 +103,7 @@ export class SidebarComponent {
       error: (error) => {
         this.logoutLoading.set(false);
         console.error(error);
-      }
+      },
     });
   }
 }

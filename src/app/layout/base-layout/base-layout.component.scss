@@ -18,6 +18,6 @@
   }
 
   &__content {
-    padding: rem(24px);
+    padding: calc(var(--spacing-unit) * 8);
   }
 }

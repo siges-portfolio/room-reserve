@@ -1,0 +1,110 @@
+<div class="profile" *transloco="let t; prefix: 'client.profile'">
+  <section-header class="profile__header">
+    <span header-title>Profile</span>
+    <span header-subtitle>Edit profile and booking history.</span>
+    <ng-container header-actions>
+      <button rs-button disabled color="gray">
+        <mat-icon class="material-symbols-outlined" fontIcon="key"></mat-icon>
+        <span>Change password</span>
+      </button>
+      <button rs-button color="warning">
+        <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
+        <span>Logout</span>
+      </button>
+    </ng-container>
+  </section-header>
+  <div class="user profile__block profile__user">
+    <div class="user__main">
+      <div class="user__avatar">
+        @if (user()?.user_metadata?.avatar_url) {
+
+        } @else {
+          <mat-icon class="material-symbols-outlined icon icon--lg" fontIcon="person"></mat-icon>
+        }
+        <button
+          rs-button-filled
+          rs-button-icon
+          size="xs"
+          color="primary"
+          class="user__avatar-change-button"
+        >
+          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="upload"></mat-icon>
+        </button>
+      </div>
+      <h5 class="user__fullname">{{ userDisplayName() }}</h5>
+      <div class="user__email">{{ user()?.email }}</div>
+    </div>
+    <div class="user__metadata">
+      <div class="user__metadata-item">
+        <mat-icon class="material-symbols-outlined" fontIcon="alternate_email"></mat-icon>
+        <span>Email: {{ user()?.email }}</span>
+      </div>
+      <div class="user__metadata-item">
+        <mat-icon class="material-symbols-outlined" fontIcon="license"></mat-icon>
+        <span>Role: Admin</span>
+      </div>
+      <div class="user__metadata-item">
+        <mat-icon class="material-symbols-outlined" fontIcon="calendar_add_on"></mat-icon>
+        <span>Joined: {{ user()?.created_at | date }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="edit-fields profile__block profile__edit-fields">
+    <div class="profile__block-header">
+      <h5 class="profile__block-title">Edit profile</h5>
+    </div>
+    <div class="edit-fields__content profile__block-content" [formGroup]="form">
+      <div class="edit-fields__content-wrapper">
+        <div class="edit-fields__content-column">
+          <form-field>
+            <span form-label-prefix>First name</span>
+            <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="account_circle"></mat-icon>
+            <input rs-input type="text" placeholder="Enter your first name" formControlName="firstName">
+          </form-field>
+          <form-field>
+            <span form-label-prefix>Last name</span>
+            <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="account_circle"></mat-icon>
+            <input rs-input type="text" placeholder="Enter your last name" formControlName="lastName">
+          </form-field>
+        </div>
+        <div class="edit-fields__content-column">
+          <form-field>
+            <span form-label-prefix>Phone number</span>
+            <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="phone_enabled"></mat-icon>
+            <input rs-input type="text" placeholder="+380 123 45 67" formControlName="phone">
+          </form-field>
+          <form-field>
+            <span form-label-prefix>Date of Birth</span>
+            <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="calendar_month"></mat-icon>
+            <input rs-input type="text" placeholder="--/--/--" formControlName="birthDate">
+          </form-field>
+        </div>
+        <div class="edit-fields__content-column edit-fields__content-column--full-width">
+          <form-field>
+            <span form-label-prefix>About yourself</span>
+            <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="description"></mat-icon>
+            <textarea rs-input rows="3" placeholder="Tell us about yourself..." formControlName="about"></textarea>
+          </form-field>
+        </div>
+      </div>
+      <div class="edit-fields__content-actions">
+        <button
+          rs-button-filled
+          class="edit-fields__content-action"
+          [disabled]="form.invalid"
+          [loading]="loading()"
+          (click)="saveChanges()"
+        >
+          <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="save"></mat-icon>
+          <span>Save changes</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="profile__block profile__bookings">
+    <div class="profile__block-header">
+      <h5 class="profile__block-title">My bookings</h5>
+    </div>
+    <div class="profile__block-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, animi architecto atque enim eveniet ex fugiat magnam natus necessitatibus nihil nostrum nulla numquam officia sit totam. Aliquam, consectetur deserunt dolorem eligendi impedit modi quibusdam suscipit ullam! Earum et expedita incidunt libero natus nostrum qui repellat rerum veniam voluptatem! Adipisci consequuntur cupiditate distinctio eius, enim et illo laboriosam, magnam natus non omnis possimus quaerat quasi qui quia quis quisquam sequi? Alias aspernatur assumenda earum maiores nulla porro provident vel. Alias cupiditate inventore ipsa ipsam iste, officiis veritatis. Aliquid corporis, incidunt nulla pariatur perferendis quam repudiandae tempore vitae! Facilis quia sint voluptatem.</div>
+  </div>
+</div>

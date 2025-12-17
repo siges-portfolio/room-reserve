@@ -26,13 +26,13 @@
   }
 
   &__header {
-    padding: rem(24px);
+    padding: calc(var(--spacing-unit) * 6);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: calc(var(--spacing-unit) * 2);
   }
 
   &__logo-icon {
@@ -50,10 +50,10 @@
 
   &__footer {
     margin-top: auto;
-    padding: rem(24px);
+    padding: calc(var(--spacing-unit) * 6);
 
     & > * {
-      padding: rem(16px) 0;
+      padding: calc(var(--spacing-unit) * 4) 0;
       border-top: 1px solid var(--border-color);
 
       &:last-child {
@@ -66,13 +66,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: rem(16px);
+    gap: calc(var(--spacing-unit) * 4);
   }
 
   &__user {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: calc(var(--spacing-unit) * 2);
   }
 
   &__user-avatar {
@@ -98,19 +98,19 @@
   &__user-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--spacing-unit);
   }
 }
 
 .navigation {
-  padding: rem(24px);
+  padding: calc(var(--spacing-unit) * 6);
 
   &__group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: calc(var(--spacing-unit) * 2);
 
-    padding: rem(24px) 0;
+    padding: calc(var(--spacing-unit) * 6) 0;
 
     &:not(:last-child) {
       border-bottom: 1px solid var(--border-color);
@@ -136,15 +136,15 @@
   &__group-items {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--spacing-unit);
   }
 
   &__item {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: calc(var(--spacing-unit) * 3);
 
-    padding: 8px 12px;
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
     border-radius: var(--radius-lg);
 
     font-size: 14px;

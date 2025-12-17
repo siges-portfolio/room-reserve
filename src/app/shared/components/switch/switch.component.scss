@@ -1,14 +1,14 @@
 @use "_mixins/rem" as *;
 
 :host {
-  --items-padding: 2px;
+  --items-padding: calc(var(--spacing-unit) * 0.5);
   --border-radius: var(--radius-lg);
 }
 
 .rs-switch {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: calc(var(--spacing-unit) * 2);
 
   &--label-left {
     align-items: center;
@@ -19,7 +19,7 @@
   &__label {
     font-size: 14px;
     font-weight: 500;
-    color: var(--neutral-100-color);
+    color: var(--neutral-60-color);
   }
 
   &__items {
@@ -28,7 +28,7 @@
 
     display: grid;
     grid-template-columns: repeat(var(--items-count), 1fr);
-    gap: 4px;
+    gap: var(--spacing-unit);
 
     padding: var(--items-padding);
 
@@ -40,7 +40,7 @@
   }
 
   &__item {
-    padding: 10px 12px;
+    padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3);
 
     border-radius: var(--border-radius);
 

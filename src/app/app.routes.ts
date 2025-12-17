@@ -25,6 +25,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('@layout/base-layout/base-layout.component').then((m) => m.BaseLayoutComponent),
     loadChildren: () => import('@modules/client/client.module').then((m) => m.ClientModule),
-    providers: [provideTranslocoScope()],
+    providers: [provideTranslocoScope('client')],
   },
 ];

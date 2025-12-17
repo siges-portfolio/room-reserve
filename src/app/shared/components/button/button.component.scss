@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: calc(var(--spacing-unit) * 2);
 
   background-color: transparent;
   border: none;
@@ -19,13 +19,13 @@
   font-family: var(--font-base);
 
   border-radius: var(--rs-button-border-radius, var(--radius-md));
-  padding: 0 var(--rs-button-padding-x, 16px);
+  padding: 0 var(--rs-button-padding-x, calc(var(--spacing-unit) * 3));
   font-size: var(--rs-button-font-size, 14px);
   font-weight: var(--rs-button-font-weight, 500);
 
   cursor: pointer;
 
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 
   &:disabled {
     opacity: 0.4;

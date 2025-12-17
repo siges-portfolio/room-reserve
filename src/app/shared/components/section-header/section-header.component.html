@@ -1,0 +1,20 @@
+<div class="section-header">
+  <button
+    rs-button-outlined
+    rs-button-icon
+    color="gray"
+    class="section-header__back">
+    <mat-icon class="material-symbols-outlined" fontIcon="arrow_back"></mat-icon>
+  </button>
+  <div class="section-header__content">
+    <h5 class="section-header__title">
+      <ng-content select="[header-title]"></ng-content>
+    </h5>
+    <div class="section-header__subtitle">
+      <ng-content select="[header-subtitle]"></ng-content>
+    </div>
+  </div>
+  <div class="section-header__actions">
+    <ng-content select="[header-actions]"></ng-content>
+  </div>
+</div>

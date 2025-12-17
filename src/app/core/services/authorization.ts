@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, from, map, switchMap } from 'rxjs';
 import { environment } from '@environment';
 import { AuthState, User } from '@core/models/user';
-import { AuthResponse, AuthResponsePassword } from '@supabase/supabase-js';
+import { AuthResponse, AuthResponsePassword, UserAttributes } from '@supabase/supabase-js';
 import { SupabaseService } from '@core/services/supabase';
 
 const INITIAL_AUTH_STATE: AuthState = {
@@ -68,6 +68,11 @@ export class AuthorizationService {
         case 'TOKEN_REFRESHED':
           break;
         case 'USER_UPDATED':
+          if (user) {
+            this.updateState({
+              user: this.mapUserData({ ...user, email: user.email! }),
+            });
+          }
           break;
       }
     });
@@ -149,8 +154,8 @@ export class AuthorizationService {
     );
   }
 
-  updatePassword(password: string) {
-    return from(this.supabase.client.auth.updateUser({ password })).pipe(
+  updateUser(data: Partial<UserAttributes>) {
+    return from(this.supabase.client.auth.updateUser({ data })).pipe(
       map((response) => {
         if (response.error) throw response.error;
 

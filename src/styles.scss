@@ -76,22 +76,22 @@ textarea {
 ul {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin: 8px 0;
-  padding: 0 0 0 8px;
+  gap: var(--spacing-unit);
+  margin: calc(var(--spacing-unit) * 2) 0;
+  padding: 0 0 0 calc(var(--spacing-unit) * 2);
   list-style: none;
 
   li {
-    gap: 4px;
+    gap: var(--spacing-unit);
 
     &:before {
-      width: 4px;
-      min-width: 4px;
-      height: 4px;
+      width: var(--spacing-unit);
+      min-width: var(--spacing-unit);
+      height: var(--spacing-unit);
       aspect-ratio: 1/1;
 
       display: inline-block;
-      margin-right: 4px;
+      margin-right: var(--spacing-unit);
 
       content: '';
       border-radius: 50%;

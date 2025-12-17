@@ -63,7 +63,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.loading.set(true);
 
     this.authService
-      .updatePassword(password)
+      .updateUser({ password })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {

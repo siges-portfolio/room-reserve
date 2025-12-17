@@ -3,7 +3,7 @@
 .rs-checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--spacing-unit) * 2);
   cursor: pointer;
 
   input {
