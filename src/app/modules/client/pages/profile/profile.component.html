@@ -3,10 +3,6 @@
     <span header-title>Profile</span>
     <span header-subtitle>Edit profile and booking history.</span>
     <ng-container header-actions>
-      <button rs-button disabled color="gray">
-        <mat-icon class="material-symbols-outlined" fontIcon="key"></mat-icon>
-        <span>Change password</span>
-      </button>
       <button rs-button color="warning">
         <mat-icon class="material-symbols-outlined" fontIcon="logout"></mat-icon>
         <span>Logout</span>
@@ -14,40 +10,46 @@
     </ng-container>
   </section-header>
   <div class="user profile__block profile__user">
-    <div class="user__main">
-      <div class="user__avatar">
-        @if (user()?.user_metadata?.avatar_url) {
+    <div class="profile__block-header">
+      <h5 class="profile__block-title">Profile summary</h5>
+    </div>
+    <div class="user__content profile__block-content">
+      <div class="user__main">
+        <div class="user__avatar">
+          @if (user()?.user_metadata?.avatar_url) {
 
-        } @else {
-          <mat-icon class="material-symbols-outlined icon icon--lg" fontIcon="person"></mat-icon>
-        }
-        <button
-          rs-button-filled
-          rs-button-icon
-          size="xs"
-          color="primary"
-          class="user__avatar-change-button"
-        >
-          <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="upload"></mat-icon>
-        </button>
+          } @else {
+            <mat-icon class="material-symbols-outlined icon icon--lg" fontIcon="person"></mat-icon>
+          }
+          <button
+            rs-button-filled
+            rs-button-icon
+            size="xs"
+            color="primary"
+            class="user__avatar-change-button"
+          >
+            <mat-icon class="material-symbols-outlined icon icon--xs" fontIcon="upload"></mat-icon>
+          </button>
+        </div>
+        <h5 class="user__fullname">{{ userDisplayName() }}</h5>
+        <div class="user__email">{{ user()?.email }}</div>
       </div>
-      <h5 class="user__fullname">{{ userDisplayName() }}</h5>
-      <div class="user__email">{{ user()?.email }}</div>
+      <div class="user__metadata">
+        <div class="user__metadata-item">
+          <mat-icon class="material-symbols-outlined" fontIcon="alternate_email"></mat-icon>
+          <span>Email: {{ user()?.email }}</span>
+        </div>
+        <div class="user__metadata-item">
+          <mat-icon class="material-symbols-outlined" fontIcon="license"></mat-icon>
+          <span>Role: Admin</span>
+        </div>
+        <div class="user__metadata-item">
+          <mat-icon class="material-symbols-outlined" fontIcon="calendar_add_on"></mat-icon>
+          <span>Joined: {{ user()?.created_at | date }}</span>
+        </div>
+      </div>
     </div>
-    <div class="user__metadata">
-      <div class="user__metadata-item">
-        <mat-icon class="material-symbols-outlined" fontIcon="alternate_email"></mat-icon>
-        <span>Email: {{ user()?.email }}</span>
-      </div>
-      <div class="user__metadata-item">
-        <mat-icon class="material-symbols-outlined" fontIcon="license"></mat-icon>
-        <span>Role: Admin</span>
-      </div>
-      <div class="user__metadata-item">
-        <mat-icon class="material-symbols-outlined" fontIcon="calendar_add_on"></mat-icon>
-        <span>Joined: {{ user()?.created_at | date }}</span>
-      </div>
-    </div>
+
   </div>
   <div class="edit-fields profile__block profile__edit-fields">
     <div class="profile__block-header">
@@ -87,24 +89,31 @@
           </form-field>
         </div>
       </div>
-      <div class="edit-fields__content-actions">
-        <button
-          rs-button-filled
-          class="edit-fields__content-action"
-          [disabled]="form.invalid"
-          [loading]="loading()"
-          (click)="saveChanges()"
-        >
-          <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="save"></mat-icon>
-          <span>Save changes</span>
-        </button>
-      </div>
+    </div>
+    <div class="profile__block-actions">
+      <button rs-button color="gray" class="profile__block-action">
+        <mat-icon class="material-symbols-outlined" fontIcon="key"></mat-icon>
+        <span>Change password</span>
+      </button>
+      <button
+        rs-button-filled
+        class="profile__block-action"
+        [disabled]="form.invalid"
+        [loading]="loading()"
+        (click)="saveChanges()"
+      >
+        <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="save"></mat-icon>
+        <span>Save changes</span>
+      </button>
     </div>
   </div>
   <div class="profile__block profile__bookings">
     <div class="profile__block-header">
       <h5 class="profile__block-title">My bookings</h5>
     </div>
-    <div class="profile__block-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, animi architecto atque enim eveniet ex fugiat magnam natus necessitatibus nihil nostrum nulla numquam officia sit totam. Aliquam, consectetur deserunt dolorem eligendi impedit modi quibusdam suscipit ullam! Earum et expedita incidunt libero natus nostrum qui repellat rerum veniam voluptatem! Adipisci consequuntur cupiditate distinctio eius, enim et illo laboriosam, magnam natus non omnis possimus quaerat quasi qui quia quis quisquam sequi? Alias aspernatur assumenda earum maiores nulla porro provident vel. Alias cupiditate inventore ipsa ipsam iste, officiis veritatis. Aliquid corporis, incidunt nulla pariatur perferendis quam repudiandae tempore vitae! Facilis quia sint voluptatem.</div>
+    <div class="profile__block-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, animi architecto atque enim eveniet ex fugiat magnam natus necessitatibus nihil nostrum nulla numquam officia sit totam. Aliquam, consectetur deserunt dolorem eligendi impedit modi quibusdam suscipit ullam! Earum et expedita incidunt libero natus nostrum qui repellat rerum veniam voluptatem! Adipisci consequuntur cupiditate distinctio eius, enim et illo laboriosam, magnam natus non omnis possimus quaerat quasi qui quia quis quisquam sequi? Alias aspernatur assumenda earum maiores nulla porro provident vel. Alias cupiditate inventore ipsa ipsam iste, officiis veritatis. Aliquid corporis, incidunt nulla pariatur perferendis quam repudiandae tempore vitae! Facilis quia sint voluptatem.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur consequuntur expedita, minima necessitatibus perspiciatis vel vitae. Deserunt laborum magni nemo optio praesentium vero! Assumenda dignissimos dolores facere impedit temporibus. Architecto consectetur culpa facere laudantium libero natus, nesciunt provident reprehenderit?</p>
+    </div>
   </div>
 </div>
