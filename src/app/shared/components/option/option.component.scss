@@ -17,6 +17,12 @@
     background-color: color-mix(in srgb, var(--neutral-30-color) 90%, black);
   }
 
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
   mat-icon {
     margin-left: auto;
     color: var(--primary-color);

@@ -9,10 +9,9 @@
     [ngClass]="{ active: opened() }"
     (click)="opened() ? closeSelect() : openSelect($event)"
   >
-    <span>{{ selectedOption()?.label ? selectedOption()?.label : label()  }}</span>
+    <span class="rs-select__label">{{ customLabel() ? label() : selectedOption()?.label }}</span>
     <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="arrow_drop_down"></mat-icon>
   </button>
-  <ng-content></ng-content>
 </div>
 
 <ng-template #optionsTemplate>

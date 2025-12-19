@@ -33,6 +33,8 @@
     "@jsverse/transloco": "^8.2.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.87.1",
+    "@types/google-libphonenumber": "^7.4.30",
+    "google-libphonenumber": "^3.2.43",
     "prettier": "^3.6.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

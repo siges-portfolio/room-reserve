@@ -13,7 +13,8 @@ import { CheckboxComponent } from '@shared/components/checkbox/checkbox.componen
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ToastService } from '@shared/components/toast/toast.service';
 import { AuthorizationService } from '@core/services/authorization';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { SupabaseService } from '@core/services/supabase';
 
 @Component({
   standalone: true,

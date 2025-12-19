@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, OnDestroy } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { SectionHeaderComponent } from '@shared/components/section-header/section-header.component';
 import { MatIcon } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Subject, takeUntil } from 'rxjs';
 import { ToastService } from '@shared/components/toast/toast.service';
 import { Router } from '@angular/router';
+import { PhoneInputComponent } from '@shared/components/phone-input/phone-input.component';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { Router } from '@angular/router';
     FormFieldComponent,
     InputComponent,
     ReactiveFormsModule,
+    PhoneInputComponent,
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -39,7 +41,6 @@ export class ProfileComponent implements OnDestroy {
   userState$ = toSignal(this.authService.authState$);
 
   saveLoading = signal<boolean>(false);
-  logoutLoading = signal<boolean>(false);
   user = computed(() => this.userState$()?.user);
   userDisplayName = computed(() => {
     const userMetadata = this.user()?.user_metadata.data;
@@ -51,18 +52,6 @@ export class ProfileComponent implements OnDestroy {
     }
   });
 
-  constructor() {
-    effect(() => {
-      const user = this.userState$()?.user;
-      if (!user) return;
-
-      this.form.patchValue({
-        ...user.user_metadata.data,
-        phone: this.userState$()?.user?.phone,
-      });
-    });
-  }
-
   form = new FormGroup({
     firstName: new FormControl('', {
       validators: [Validators.minLength(3), Validators.maxLength(32)],
@@ -70,10 +59,22 @@ export class ProfileComponent implements OnDestroy {
     lastName: new FormControl('', {
       validators: [Validators.minLength(3), Validators.maxLength(32)],
     }),
-    phone: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
+    // TODO: add phone validator
+    phone: new FormControl('', { nonNullable: true }),
     birthDate: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
     about: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
   });
+
+  constructor() {
+    effect(() => {
+      const user = this.userState$()?.user;
+      if (!user) return;
+
+      this.form.patchValue({
+        ...user.user_metadata.data,
+      });
+    });
+  }
 
   saveChanges() {
     const data = this.form.value;

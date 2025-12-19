@@ -1,0 +1,18 @@
+<form-field class="phone-field" [formGroup]="form">
+  <span form-label-prefix>Phone number</span>
+  <rs-select form-prefix [customLabel]="true" [label]="regionCodeLabel()" formControlName="regionCode">
+    @for (region of supportedRegions(); track region) {
+      <rs-option [value]="region.key">
+        <img
+          class="phone-field__option-image"
+          width="24"
+          height="24"
+          [ngSrc]="`https://purecatamphetamine.github.io/country-flag-icons/1x1/${ region.key }.svg`"
+          [attr.alt]="`${ region.key } Flag`"
+        />
+        <span>{{ region.label }}</span>
+      </rs-option>
+    }
+  </rs-select>
+  <input rs-input type="tel" [placeholder]="placeholder()" formControlName="phoneNumber">
+</form-field>

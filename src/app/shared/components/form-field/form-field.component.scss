@@ -1,4 +1,6 @@
 .form-field {
+  --inner-padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing-unit) * 2);
@@ -73,7 +75,7 @@
     align-items: center;
     gap: calc(var(--spacing-unit) * 2.5);
 
-    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+    padding: var(--inner-padding);
 
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);

@@ -2,16 +2,23 @@
 
 .rs-select {
   &__button {
-    font-weight: 600;
-    color: var(--neutral-100-color);
+
 
     * {
       pointer-events: none;
     }
   }
 
+  &__label {
+    font-weight: 600;
+    color: var(--neutral-100-color);
+  }
+
   &__options {
+    overflow: auto;
+
     width: 100%;
+    max-height: 324px;
 
     display: flex;
     flex-direction: column;
@@ -20,7 +27,22 @@
     margin: var(--spacing-unit) 0;
     padding: var(--spacing-unit);
 
+    box-sizing: border-box;
     border-radius: var(--radius-lg);
     background-color: var(--neutral-30-color);
+
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--neutral-50-color);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+      visibility: hidden;
+    }
   }
 }

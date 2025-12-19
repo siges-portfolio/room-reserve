@@ -1,6 +1,6 @@
 <div class="rs-option" [ngClass]="{ active: selected }">
   @if (multiple()) {}
-  <span #label>
+  <span class="rs-option__label" #label>
     <ng-content></ng-content>
   </span>
   @if (selected) {

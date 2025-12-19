@@ -1,12 +1,15 @@
 import {
   AfterContentInit,
-  Component, contentChildren, effect,
+  Component,
+  contentChildren,
   ElementRef,
   inject,
-  input, OnDestroy,
-  OnInit,
-  signal, TemplateRef, viewChild,
-  ViewContainerRef
+  input,
+  OnDestroy,
+  signal,
+  TemplateRef,
+  viewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { FormFieldControl } from '@shared/components/form-field/form-field-control';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -16,7 +19,10 @@ import { ConnectedPosition, Overlay, OverlayRef, PositionStrategy } from '@angul
 import { NgClass } from '@angular/common';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Subject, takeUntil } from 'rxjs';
-import { OPTION_PARENT_COMPONENT, OptionComponent } from '@shared/components/option/option.component';
+import {
+  OPTION_PARENT_COMPONENT,
+  OptionComponent,
+} from '@shared/components/option/option.component';
 
 const SELECT_POSITION_STRATEGY: ConnectedPosition[] = [
   {
@@ -47,24 +53,22 @@ const SELECT_POSITION_STRATEGY: ConnectedPosition[] = [
     overlayY: 'bottom',
     panelClass: 'top-left',
   },
-]
+];
 
 @Component({
   standalone: true,
   selector: 'rs-select',
   templateUrl: './select.component.html',
-  imports: [
-    ButtonComponent,
-    MatIcon,
-    NgClass
-  ],
+  imports: [ButtonComponent, MatIcon, NgClass],
   providers: [
     { provide: FormFieldControl, useExisting: SelectComponent },
     { provide: OPTION_PARENT_COMPONENT, useExisting: SelectComponent },
   ],
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
 })
-export class SelectComponent implements FormFieldControl<any>, ControlValueAccessor, OnInit, OnDestroy, AfterContentInit {
+export class SelectComponent
+  implements FormFieldControl<any>, ControlValueAccessor, OnDestroy, AfterContentInit
+{
   destroy$: Subject<void> = new Subject();
   ngControl = inject(NgControl, { self: true, optional: true })!;
   elementRef = inject(ElementRef);
@@ -77,10 +81,11 @@ export class SelectComponent implements FormFieldControl<any>, ControlValueAcces
   private onTouched: () => void = () => {};
 
   positionStrategy = SELECT_POSITION_STRATEGY;
-  trigger = viewChild<ButtonComponent>('trigger')
+  trigger = viewChild<ButtonComponent>('trigger');
   optionsTemplate = viewChild<TemplateRef<any>>('optionsTemplate');
   options = contentChildren(OptionComponent);
 
+  customLabel = input<boolean>(false);
   label = input<string>('');
   multiple = input<boolean>(false);
   value = signal<string | string[]>('');
@@ -92,21 +97,21 @@ export class SelectComponent implements FormFieldControl<any>, ControlValueAcces
     if (this.ngControl) this.ngControl.valueAccessor = this;
   }
 
-  ngOnInit(): void {}
-
-  ngAfterContentInit() {}
+  ngAfterContentInit() {
+    this.setSelectedOptionLabel();
+  }
 
   selectOption(value: string) {
     // TODO: muptiple select
     if (this.multiple()) {
-      return
+      return;
     } else {
       this.value.set(value);
       this.onChange(value);
     }
 
-    this.setSelectedOptionLabel()
-    this.closeSelect()
+    this.setSelectedOptionLabel();
+    this.closeSelect();
   }
 
   setSelectedOptionLabel() {
@@ -123,8 +128,8 @@ export class SelectComponent implements FormFieldControl<any>, ControlValueAcces
 
   closeSelect() {
     if (this.#overlayRef && this.#overlayRef?.hasAttached()) {
-      this.#overlayRef.detach()
-      this.opened.set(false)
+      this.#overlayRef.detach();
+      this.opened.set(false);
     }
   }
 
@@ -141,11 +146,14 @@ export class SelectComponent implements FormFieldControl<any>, ControlValueAcces
       minWidth: triggerWidth ?? '120px',
     });
 
-    this.#overlayRef?.outsidePointerEvents().pipe(takeUntil(this.destroy$)).subscribe((event) => {
-      if (target && target !== event.target) this.closeSelect()
-    })
+    this.#overlayRef
+      ?.outsidePointerEvents()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((event) => {
+        if (target && target !== event.target) this.closeSelect();
+      });
 
-    const templateRef = new TemplatePortal(template, this.viewContainer)
+    const templateRef = new TemplatePortal(template, this.viewContainer);
     this.#overlayRef.attach(templateRef);
 
     this.opened.set(true);
@@ -164,7 +172,7 @@ export class SelectComponent implements FormFieldControl<any>, ControlValueAcces
   }
 
   writeValue(value: any): void {
-    this.setSelectedOptionLabel()
+    this.setSelectedOptionLabel();
     this.value.set(value);
   }
 
