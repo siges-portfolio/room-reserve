@@ -76,7 +76,7 @@ export class PhoneInputComponent implements OnInit, OnDestroy, ControlValueAcces
   transformPhoneData(phoneNumber: string = '', regionCode?: string) {
     if (!regionCode || !this.phoneControl) return;
 
-    this.phoneControl.setValue(phoneNumber.replace(/[^0-9]*/g, ''), { emitEvent: false });
+    phoneNumber = phoneNumber.replace(/[^0-9]*/g, '');
 
     const exampleNumber = this.phoneUtil.getExampleNumber(regionCode),
       exampleNumberNational = exampleNumber.getNationalNumberOrDefault(),
