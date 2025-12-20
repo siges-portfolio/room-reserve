@@ -1,7 +1,9 @@
 import {
   AfterContentInit,
   Component,
+  computed,
   contentChildren,
+  effect,
   ElementRef,
   inject,
   input,
@@ -16,7 +18,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { MatIcon } from '@angular/material/icon';
 import { ConnectedPosition, Overlay, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -59,7 +61,7 @@ const SELECT_POSITION_STRATEGY: ConnectedPosition[] = [
   standalone: true,
   selector: 'rs-select',
   templateUrl: './select.component.html',
-  imports: [ButtonComponent, MatIcon, NgClass],
+  imports: [ButtonComponent, MatIcon, NgClass, NgTemplateOutlet],
   providers: [
     { provide: FormFieldControl, useExisting: SelectComponent },
     { provide: OPTION_PARENT_COMPONENT, useExisting: SelectComponent },
@@ -85,13 +87,20 @@ export class SelectComponent
   optionsTemplate = viewChild<TemplateRef<any>>('optionsTemplate');
   options = contentChildren(OptionComponent);
 
-  customLabel = input<boolean>(false);
-  label = input<string>('');
+  label = input<string | TemplateRef<any> | null>(null);
   multiple = input<boolean>(false);
   value = signal<string | string[]>('');
   disabled = signal<boolean>(false);
   opened = signal<boolean>(false);
   selectedOption = signal<OptionComponent | null>(null);
+
+  get stringLabel() {
+    return typeof this.label() === 'string' && this.label();
+  }
+
+  get templateLabel() {
+    return this.label() instanceof TemplateRef && this.label() as TemplateRef<any>;
+  }
 
   constructor() {
     if (this.ngControl) this.ngControl.valueAccessor = this;

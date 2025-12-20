@@ -11,8 +11,7 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { NgOptimizedImage } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 import { USER_REGION } from '@shared/tokens/user-region.token';
 
 @Component({
@@ -26,7 +25,6 @@ import { USER_REGION } from '@shared/tokens/user-region.token';
     OptionComponent,
     InputComponent,
     ReactiveFormsModule,
-    NgOptimizedImage,
   ],
   providers: [
     {
@@ -53,8 +51,16 @@ export class PhoneInputComponent implements OnInit, OnDestroy, ControlValueAcces
   value = signal<string>('');
   disabled = signal<boolean>(false);
   placeholder = signal<string>('');
-  regionCodeLabel = signal<string>('');
+  countryCode = signal<string | null>(null);
   supportedRegions = signal<{ label: string; key: string }[]>([]);
+
+  get phoneControl() {
+    return this.form.get('phoneNumber');
+  }
+
+  get regionCode() {
+    return this.form.get('regionCode')?.value;
+  }
 
   ngOnInit() {
     this.supportedRegions.set(this.getSupportedRegions());
@@ -63,41 +69,40 @@ export class PhoneInputComponent implements OnInit, OnDestroy, ControlValueAcces
     this.transformPhoneData(initialFormValue.phoneNumber, initialFormValue.regionCode);
 
     this.form.valueChanges
-      .pipe(takeUntil(this.destroy$), debounceTime(50))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((value) => this.transformPhoneData(value.phoneNumber, value.regionCode));
-  }
-
-  get phoneControl() {
-    return this.form.get('phoneNumber')
   }
 
   transformPhoneData(phoneNumber: string = '', regionCode?: string) {
     if (!regionCode || !this.phoneControl) return;
 
-    const exampleNumber = this.phoneUtil.getExampleNumber(regionCode),
-      exampleNumberLength = exampleNumber.getNationalNumber()?.toString().length,
-      formattedExampleNumber = this.phoneUtil.format(exampleNumber, PhoneNumberFormat.NATIONAL),
-      countryCode = this.phoneUtil.getCountryCodeForRegion(regionCode);
+    this.phoneControl.setValue(phoneNumber.replace(/[^0-9]*/g, ''), { emitEvent: false });
 
-    this.regionCodeLabel.set(`${regionCode} +${countryCode}`);
-    this.placeholder.set(formattedExampleNumber);
+    const exampleNumber = this.phoneUtil.getExampleNumber(regionCode),
+      exampleNumberNational = exampleNumber.getNationalNumberOrDefault(),
+      exampleNumberFormatted = this.phoneUtil.format(exampleNumber, PhoneNumberFormat.NATIONAL),
+      countryCode = this.phoneUtil.getCountryCodeForRegion(regionCode).toString();
+
+    this.countryCode.set(countryCode);
+    this.placeholder.set(exampleNumberFormatted);
 
     if (phoneNumber.length <= 1) return;
-    const number = this.phoneUtil.parse(phoneNumber, regionCode);
-    const nationalNumber = number.getNationalNumber();
-    const numberLength = number.getNationalNumber()?.toString().length;
-    const formattedValue = this.phoneUtil.format(number, PhoneNumberFormat.NATIONAL);
 
-    if (numberLength! <= exampleNumberLength!) {
-      this.phoneControl.setValue(formattedValue, { emitEvent: false });
-      this.value.set(formattedValue);
+    const number = this.phoneUtil.parse(phoneNumber, regionCode),
+      numberNational = number.getNationalNumberOrDefault(),
+      numberFormatted = this.phoneUtil.format(number, PhoneNumberFormat.NATIONAL);
+
+    if (numberNational.toString().length <= exampleNumberNational.toString().length) {
+      this.phoneControl.setValue(numberFormatted, { emitEvent: false });
+      this.value.set(numberFormatted);
     } else {
       this.phoneControl.setValue(this.value(), { emitEvent: false });
     }
 
     const value = this.phoneUtil.parseAndKeepRawInput(this.value(), regionCode);
 
-    if (nationalNumber) this.onChange(`+${countryCode}${value.getNationalNumber()}`);
+    if (numberNational)
+      this.onChange(`+${this.countryCode()}${value.getNationalNumberOrDefault()}`);
   }
 
   getSupportedRegions() {
@@ -116,10 +121,13 @@ export class PhoneInputComponent implements OnInit, OnDestroy, ControlValueAcces
     if (!value) return;
 
     const number = this.phoneUtil.parse(value),
-      regionCode = this.phoneUtil.getRegionCodeForNumber(number),
-      formattedNumber = this.phoneUtil.format(number, PhoneNumberFormat.NATIONAL);
+      formattedNumber = this.phoneUtil.format(number, PhoneNumberFormat.NATIONAL),
+      regionCode = this.phoneUtil.getRegionCodeForNumber(number);
 
-    this.form.patchValue({ regionCode, phoneNumber: number.getNationalNumber()?.toString() });
+    this.form.patchValue({
+      regionCode,
+      phoneNumber: number.getNationalNumberOrDefault().toString(),
+    });
     this.value.set(formattedNumber);
   }
 

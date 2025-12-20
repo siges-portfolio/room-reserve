@@ -1,7 +1,4 @@
 .phone-field {
   --inner-padding: 0 calc(var(--spacing-unit) * 3) 0 0;
-
-  &__option-image {
-    //height: 12px;
-  }
+  --rs-button-border-radius: calc(var(--radius-md) - 2px) 0 0 calc(var(--radius-md) - 2px);
 }

@@ -9,7 +9,13 @@
     [ngClass]="{ active: opened() }"
     (click)="opened() ? closeSelect() : openSelect($event)"
   >
-    <span class="rs-select__label">{{ customLabel() ? label() : selectedOption()?.label }}</span>
+    @if (templateLabel) {
+      <ng-container [ngTemplateOutlet]="templateLabel"></ng-container>
+    } @else if (stringLabel) {
+      <span>{{ stringLabel }}</span>
+    } @else {
+      <span>{{ selectedOption()?.label }}</span>
+    }
     <mat-icon class="material-symbols-outlined icon icon--sm" fontIcon="arrow_drop_down"></mat-icon>
   </button>
 </div>

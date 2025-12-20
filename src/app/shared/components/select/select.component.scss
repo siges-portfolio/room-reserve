@@ -2,16 +2,17 @@
 
 .rs-select {
   &__button {
+    font-weight: 600;
+    color: var(--neutral-60-color);
 
+    &:hover,
+    &.active {
+      color: var(--neutral-100-color);
+    }
 
     * {
       pointer-events: none;
     }
-  }
-
-  &__label {
-    font-weight: 600;
-    color: var(--neutral-100-color);
   }
 
   &__options {

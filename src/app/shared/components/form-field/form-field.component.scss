@@ -5,6 +5,19 @@
   flex-direction: column;
   gap: calc(var(--spacing-unit) * 2);
 
+  &:hover,
+  &:has(:focus) {
+    .form-field {
+      &__inner {
+        border-color: color-mix(in srgb, var(--neutral-100-color) 25%, transparent);
+      }
+
+      &__prefix {
+        color: color-mix(in srgb, var(--neutral-100-color) 45%, transparent);
+      }
+    }
+  }
+
   &--label-left {
     flex-direction: row;
     justify-content: space-between;
@@ -79,15 +92,9 @@
 
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
+    background-color: var(--neutral-20-color);
+
     transition: border-color var(--transition-fast);
-
-    &:hover {
-      border-color: color-mix(in srgb, var(--neutral-100-color) 25%, transparent);
-
-      .form-field__prefix {
-        color: color-mix(in srgb, var(--neutral-100-color) 45%, transparent);
-      }
-    }
   }
 
   &__prefix,
@@ -142,6 +149,8 @@
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) * 2);
+
+    white-space: nowrap;
 
     mat-icon {
       padding: var(--spacing-unit);

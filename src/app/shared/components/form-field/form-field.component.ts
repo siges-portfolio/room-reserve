@@ -74,7 +74,7 @@ export class FormFieldComponent implements OnDestroy {
       const control = field.ngControl?.control;
       if (!control || this.hideValidation()) return;
 
-      this.fieldDisabled.set(control.disabled);
+      this.fieldDisabled.set(control.disabled)
 
       control.events.pipe(takeUntil(this.#destroy$)).subscribe((event) => {
         if (event instanceof TouchedChangeEvent) this.isTouched.set(event.touched);
