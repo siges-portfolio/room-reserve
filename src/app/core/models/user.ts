@@ -1,9 +1,9 @@
 export interface User {
   id: string;
   email: string;
-  phone?: string;
   user_metadata: {
     data?: Record<string, string>;
+    phone?: string;
     full_name?: string;
     avatar_url?: string;
   };

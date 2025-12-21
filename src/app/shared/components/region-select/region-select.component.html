@@ -1,0 +1,25 @@
+<rs-select class="region-select" [label]="regionLabel" [formControl]="control">
+  @for (region of supportedRegions(); track region) {
+    <rs-option [value]="region.countryCode">
+      <img
+        class="region-select__option-image"
+        width="20"
+        height="14"
+        [attr.src]="`https://purecatamphetamine.github.io/country-flag-icons/1x1/${ region.regionCode }.svg`"
+        [attr.alt]="`${ region.regionCode } Flag`"
+      />
+      <span>{{ region.label }}</span>
+    </rs-option>
+  }
+</rs-select>
+
+<ng-template #regionLabel>
+  <img
+    class="phone-field__option-image"
+    width="20"
+    height="14"
+    [attr.src]="`https://purecatamphetamine.github.io/country-flag-icons/1x1/${ regionCode() }.svg`"
+    [attr.alt]="`${ regionCode() } Flag`"
+  />
+  <span>{{ `+${ value() }` }}</span>
+</ng-template>

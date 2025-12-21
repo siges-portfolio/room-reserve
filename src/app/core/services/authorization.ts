@@ -92,7 +92,7 @@ export class AuthorizationService {
         if (response.error) throw response.error;
 
         sessionStorage.removeItem(STORED_RECOVERY_KEY);
-        this.updateState({ isRecovery: false })
+        this.updateState({ isRecovery: false });
       }),
       catchError((error: any) => {
         this.updateState({
@@ -149,13 +149,13 @@ export class AuthorizationService {
       }),
     ).pipe(
       map((response) => {
-        if (response.error) throw response.error;;
+        if (response.error) throw response.error;
       }),
     );
   }
 
   updateUser(data: Partial<UserAttributes>) {
-    return from(this.supabase.client.auth.updateUser({ ...data })).pipe(
+    return from(this.supabase.client.auth.updateUser({ data })).pipe(
       map((response) => {
         if (response.error) throw response.error;
 

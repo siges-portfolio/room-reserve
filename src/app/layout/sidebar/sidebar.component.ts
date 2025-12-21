@@ -38,7 +38,7 @@ export class SidebarComponent implements OnDestroy {
   userDisplayName = computed(() => {
     const userMetadata = this.user()?.user_metadata.data;
 
-    if (userMetadata && (userMetadata['firstName'].length || userMetadata['lastName'].length)) {
+    if (userMetadata && (userMetadata['firstName'] || userMetadata['lastName'])) {
       return `${userMetadata['firstName']} ${userMetadata['lastName']}`;
     } else {
       return this.user()?.email;

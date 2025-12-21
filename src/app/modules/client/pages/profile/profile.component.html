@@ -10,11 +10,7 @@
     <div class="user__content profile__block-content">
       <div class="user__main">
         <div class="user__avatar">
-          @if (user()?.user_metadata?.avatar_url) {
-
-          } @else {
-            <mat-icon class="material-symbols-outlined icon icon--lg" fontIcon="person"></mat-icon>
-          }
+          <mat-icon class="material-symbols-outlined icon icon--lg" fontIcon="person"></mat-icon>
           <button
             rs-button-filled
             rs-button-icon
@@ -64,7 +60,11 @@
           </form-field>
         </div>
         <div class="edit-fields__content-column">
-          <phone-input formControlName="phone"></phone-input>
+          <form-field class="edit-fields__phone-number">
+            <span form-label-prefix>Phone number</span>
+            <region-select form-prefix formControlName="phoneCountryCode"></region-select>
+            <phone-input formControlName="phoneNumber" [countryCode]="phoneCountryCode"></phone-input>
+          </form-field>
           <form-field>
             <span form-label-prefix>Date of Birth</span>
             <mat-icon form-prefix class="material-symbols-outlined icon icon--sm" fontIcon="calendar_month"></mat-icon>

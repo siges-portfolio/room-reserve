@@ -89,7 +89,7 @@ export class SelectComponent
 
   label = input<string | TemplateRef<any> | null>(null);
   multiple = input<boolean>(false);
-  value = signal<string | string[]>('');
+  value = signal<string | number>('');
   disabled = signal<boolean>(false);
   opened = signal<boolean>(false);
   selectedOption = signal<OptionComponent | null>(null);
@@ -110,7 +110,7 @@ export class SelectComponent
     this.setSelectedOptionLabel();
   }
 
-  selectOption(value: string) {
+  selectOption(value: string | number) {
     // TODO: muptiple select
     if (this.multiple()) {
       return;

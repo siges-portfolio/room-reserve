@@ -3,13 +3,30 @@ import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 const phoneUtil = PhoneNumberUtil.getInstance()
 
-export function phoneValidator(region: string): ValidatorFn {
+export function phoneValidator(
+  phoneNumberField = 'phoneNumber',
+  phoneCountryCodeField = 'phoneCountryCode',
+): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value.length) return null;
+    const value = control.value,
+      phoneNumber = value[phoneNumberField],
+      countryCode = value[phoneCountryCodeField],
+      phoneNumberControl = control.get(phoneNumberField);
 
-    const number = phoneUtil.parse(control.value, region);
-    const isValidNumber = phoneUtil.isValidNumber(number);
+    if (phoneNumber.length <= 1 && phoneNumber.length !== 0) {
+      phoneNumberControl?.setErrors({ phone: true });
+      return null;
+    } else if (phoneNumber.length === 0) {
+      return null;
+    } else {
+      const regionCode = phoneUtil.getRegionCodeForCountryCode(countryCode);
 
-    return isValidNumber ? null : { phone: true };
-  }
+      const number = phoneUtil.parse(phoneNumber, regionCode);
+      const isValidNumber = phoneUtil.isValidNumber(number);
+
+      if (!isValidNumber) phoneNumberControl?.setErrors({ phone: true });
+    }
+
+    return null;
+  };
 }

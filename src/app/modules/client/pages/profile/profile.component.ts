@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, OnDestroy } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { SectionHeaderComponent } from '@shared/components/section-header/section-header.component';
 import { MatIcon } from '@angular/material/icon';
@@ -13,6 +13,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { ToastService } from '@shared/components/toast/toast.service';
 import { Router } from '@angular/router';
 import { PhoneInputComponent } from '@shared/components/phone-input/phone-input.component';
+import { RegionSelectComponent } from '@shared/components/region-select/region-select.component';
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+import { USER_REGION } from '@shared/tokens/user-region.token';
+import { phoneValidator } from '@core/validators/phone.validator';
 
 @Component({
   standalone: true,
@@ -28,13 +32,18 @@ import { PhoneInputComponent } from '@shared/components/phone-input/phone-input.
     InputComponent,
     ReactiveFormsModule,
     PhoneInputComponent,
+    RegionSelectComponent,
   ],
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnDestroy {
+export class ProfileComponent implements OnInit, OnDestroy {
   authService = inject(AuthorizationService);
   toastService = inject(ToastService);
   router = inject(Router);
+  defaultRegionCode = inject(USER_REGION);
+
+  phoneUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance();
+  defaultCountryCode = this.phoneUtil.getCountryCodeForRegion(this.defaultRegionCode);
 
   destroy$: Subject<void> = new Subject<void>();
 
@@ -45,7 +54,7 @@ export class ProfileComponent implements OnDestroy {
   userDisplayName = computed(() => {
     const userMetadata = this.user()?.user_metadata.data;
 
-    if (userMetadata && (userMetadata['firstName'].length || userMetadata['lastName'].length)) {
+    if (userMetadata && (userMetadata['firstName'] || userMetadata['lastName'])) {
       return `${userMetadata['firstName']} ${userMetadata['lastName']}`;
     } else {
       return 'Anonymous';
@@ -59,32 +68,42 @@ export class ProfileComponent implements OnDestroy {
     lastName: new FormControl('', {
       validators: [Validators.minLength(3), Validators.maxLength(32)],
     }),
-    // TODO: add phone validator
-    phone: new FormControl('', { nonNullable: true }),
+    phoneCountryCode: new FormControl(this.defaultCountryCode, { nonNullable: true }),
+    phoneNumber: new FormControl('', { nonNullable: true }),
     birthDate: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
     about: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
-  });
+  }, { validators: [phoneValidator()] });
 
-  constructor() {
-    effect(() => {
-      const user = this.userState$()?.user;
-      if (!user) return;
+  get phoneCountryCode() {
+    return this.form.get('phoneCountryCode')?.value ?? this.defaultCountryCode;
+  }
 
-      this.form.patchValue({
-        ...user.user_metadata.data,
-      });
+  ngOnInit() {
+    const user = this.userState$()?.user?.user_metadata;
+    if (!user) return;
+
+    const phoneNumber = user.phone;
+
+    this.form.patchValue({
+      ...user.data,
+      phoneNumber: phoneNumber ?? '',
+      phoneCountryCode: phoneNumber
+        ? this.phoneUtil.parse(phoneNumber).getCountryCode()
+        : this.defaultCountryCode,
     });
   }
 
   saveChanges() {
-    const data = this.form.value;
     this.saveLoading.set(true);
 
+    const data = this.form.value;
+    const phone = `+${data.phoneCountryCode}${data.phoneNumber}`;
+
     this.authService
-      .updateUser({ data: { phone: data.phone, data } })
+      .updateUser({ phone, data })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (data) => {
+        next: (_) => {
           this.toastService.showToast('success', 'Profile updated successfully.', 'check');
         },
         error: (error) => {

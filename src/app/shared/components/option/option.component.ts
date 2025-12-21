@@ -15,8 +15,8 @@ import { MatIcon } from '@angular/material/icon';
 
 interface OptionParentComponent {
   multiple: Signal<boolean>,
-  value: Signal<string | string[]>,
-  selectOption: (value: string) => {}
+  value: Signal<string | number>,
+  selectOption: (value: string | number) => {}
 }
 
 export const OPTION_PARENT_COMPONENT = new InjectionToken<OptionParentComponent>('OPTION_PARENT_COMPONENT');
@@ -34,7 +34,7 @@ export const OPTION_PARENT_COMPONENT = new InjectionToken<OptionParentComponent>
 export class OptionComponent implements OnInit {
   parent = inject(OPTION_PARENT_COMPONENT)
 
-  value = input<string>('');
+  value = input<string | number>();
   multiple = signal(false);
 
   _label: string;
@@ -58,13 +58,15 @@ export class OptionComponent implements OnInit {
   }
 
   @HostListener('click')
-  selectedOption() {
-    this.parent.selectOption(this.value())
+  selectOption() {
+    const value = this.value();
+    if (value) this.parent.selectOption(value);
   }
 
   constructor() {
     effect(() => {
       const value = this.parent.value();
+
       this._selected = Array.isArray(value)
         ? value.includes(this.value())
         : value === this.value();
@@ -73,6 +75,6 @@ export class OptionComponent implements OnInit {
 
   ngOnInit() {
     this.multiple.set(this.parent.multiple())
-    if (this.selected) this.selectedOption();
+    if (this.selected) this.selectOption();
   }
 }
