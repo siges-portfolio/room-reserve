@@ -36,7 +36,7 @@ export class SidebarComponent implements OnDestroy {
 
   user = computed(() => this.userState$()?.user);
   userDisplayName = computed(() => {
-    const userMetadata = this.user()?.user_metadata.data;
+    const userMetadata = this.user()?.user_metadata;
 
     if (userMetadata && (userMetadata['firstName'] || userMetadata['lastName'])) {
       return `${userMetadata['firstName']} ${userMetadata['lastName']}`;

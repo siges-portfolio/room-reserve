@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { SectionHeaderComponent } from '@shared/components/section-header/section-header.component';
 import { MatIcon } from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { ToastService } from '@shared/components/toast/toast.service';
 import { Router } from '@angular/router';
 import { PhoneInputComponent } from '@shared/components/phone-input/phone-input.component';
 import { RegionSelectComponent } from '@shared/components/region-select/region-select.component';
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import { USER_REGION } from '@shared/tokens/user-region.token';
 import { phoneValidator } from '@core/validators/phone.validator';
 
@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   saveLoading = signal<boolean>(false);
   user = computed(() => this.userState$()?.user);
   userDisplayName = computed(() => {
-    const userMetadata = this.user()?.user_metadata.data;
+    const userMetadata = this.user()?.user_metadata;
 
     if (userMetadata && (userMetadata['firstName'] || userMetadata['lastName'])) {
       return `${userMetadata['firstName']} ${userMetadata['lastName']}`;
@@ -61,18 +61,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   });
 
-  form = new FormGroup({
-    firstName: new FormControl('', {
-      validators: [Validators.minLength(3), Validators.maxLength(32)],
-    }),
-    lastName: new FormControl('', {
-      validators: [Validators.minLength(3), Validators.maxLength(32)],
-    }),
-    phoneCountryCode: new FormControl(this.defaultCountryCode, { nonNullable: true }),
-    phoneNumber: new FormControl('', { nonNullable: true }),
-    birthDate: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
-    about: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
-  }, { validators: [phoneValidator()] });
+  form = new FormGroup(
+    {
+      firstName: new FormControl('', {
+        validators: [Validators.minLength(3), Validators.maxLength(32)],
+      }),
+      lastName: new FormControl('', {
+        validators: [Validators.minLength(3), Validators.maxLength(32)],
+      }),
+      phoneCountryCode: new FormControl(this.defaultCountryCode, { nonNullable: true }),
+      phoneNumber: new FormControl('', { nonNullable: true }),
+      birthDate: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
+      about: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
+    },
+    { validators: [phoneValidator()] },
+  );
 
   get phoneCountryCode() {
     return this.form.get('phoneCountryCode')?.value ?? this.defaultCountryCode;
@@ -82,14 +85,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const user = this.userState$()?.user?.user_metadata;
     if (!user) return;
 
-    const phoneNumber = user.phone;
+    const phoneNumber = user['phone'],
+      phoneCountryCode = user['phone']
+        ? this.phoneUtil.parse(user['phone']).getCountryCodeOrDefault()
+        : null;
 
     this.form.patchValue({
-      ...user.data,
-      phoneNumber: phoneNumber ?? '',
-      phoneCountryCode: phoneNumber
-        ? this.phoneUtil.parse(phoneNumber).getCountryCode()
-        : this.defaultCountryCode,
+      ...user,
+      phoneNumber,
+      ...(phoneCountryCode ? { phoneCountryCode } : null),
     });
   }
 
@@ -100,7 +104,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const phone = `+${data.phoneCountryCode}${data.phoneNumber}`;
 
     this.authService
-      .updateUser({ phone, data })
+      .updateUser({
+        ...{ phone: data.phoneNumber ? phone : '' },
+        ...{ firstName: data.firstName ?? '' },
+        ...{ lastName: data.lastName ?? '' },
+      })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (_) => {
